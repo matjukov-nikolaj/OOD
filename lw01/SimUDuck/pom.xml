@@ -60,7 +60,7 @@
                         <manifest>
                             <addClasspath>true</addClasspath>
                             <classpathPrefix>lib/</classpathPrefix>
-                            <mainClass>com.ood.App</mainClass>
+                            <mainClass>com.ood.simuduck.App</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
