@@ -35,7 +35,7 @@ public class App
         duck.quack();
         duck.fly();
         duck.dance();
-        LOG.info("");
+        LOG.info("-----------------------------------------");
     }
 
     private static void drawDuck(Duck duck) {
