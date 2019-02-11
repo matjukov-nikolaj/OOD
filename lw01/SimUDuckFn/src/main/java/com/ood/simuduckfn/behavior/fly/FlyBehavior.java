@@ -1,7 +1,6 @@
 package com.ood.simuduckfn.behavior.fly;
 
 import com.ood.simuduckfn.function.Function;
-import com.ood.simuduckfn.function.FunctionWithParameter;
 import com.ood.simuduckfn.model.FlightCounter;
 import org.apache.log4j.Logger;
 
@@ -18,13 +17,11 @@ public class FlyBehavior {
         };
     }
 
-    public FunctionWithParameter getFlyWithWings() {
-        return new FunctionWithParameter<FlightCounter>() {
-            @Override
-            public void action(FlightCounter flightCounter) {
-                flightCounter.incCounter();
-                LOG.info("Flight: " + flightCounter.getCount() + " I'm flying with wings.");
-            }
+    public Function getFlyWithWings() {
+        FlightCounter flightCount = new FlightCounter();
+        return () -> {
+            flightCount.incCounter();
+            LOG.info("Flight: " + flightCount.getCount() + " I'm flying with wings.");
         };
     }
 

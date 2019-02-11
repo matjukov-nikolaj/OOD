@@ -2,15 +2,12 @@ package com.ood.simuduckfn;
 
 import com.ood.simuduckfn.behavior.fly.FlyBehavior;
 import com.ood.simuduckfn.duck.*;
-import com.ood.simuduckfn.exception.IncorrectInterfaceException;
 import org.apache.log4j.Logger;
 
-public class App
-{
+public class App {
     private static final Logger LOG = Logger.getLogger(App.class);
 
-    public static void main( String[] args )
-    {
+    public static void main(String[] args) {
         MallardDuck mallardDuck = new MallardDuck();
         playWithDuck(mallardDuck);
 
@@ -32,15 +29,12 @@ public class App
     }
 
     private static void playWithDuck(Duck duck) {
-        try {
-            drawDuck(duck);
-            duck.quack();
-            duck.fly();
-            duck.dance();
-            LOG.info("-----------------------------------------");
-        } catch (IncorrectInterfaceException e) {
-            LOG.error(e.getMessage());
-        }
+        drawDuck(duck);
+        duck.quack();
+        duck.fly();
+        duck.dance();
+        duck.swim();
+        LOG.info("-----------------------------------------");
     }
 
     private static void drawDuck(Duck duck) {

@@ -23,23 +23,23 @@ public abstract class Duck {
         this.danceBehavior = danceBehavior;
     }
 
-    public void quack() {
+    public final void quack() {
         this.quackBehavior.quack();
     }
 
-    public void swim() {
+    public final void swim() {
         LOG.info("I'm swimming.");
     }
 
-    public void fly() {
+    public final void fly() {
         this.flyBehavior.fly();
     }
 
-    public void dance() {
+    public final void dance() {
         this.danceBehavior.dance();
     }
 
-    public void setFlyBehavior(FlyBehavior flyBehavior) {
+    public final void setFlyBehavior(FlyBehavior flyBehavior) {
         this.flyBehavior = flyBehavior;
     }
 
