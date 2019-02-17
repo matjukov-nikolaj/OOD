@@ -35,7 +35,7 @@ public abstract class BasicDisplayImpl<T> implements BasicDisplay<T> {
         } else if (observable.equals(this.outsideObservable) && observable.hashCode() == this.outsideObservable.hashCode()) {
             return ObservableType.OUT;
         }
-        throw new IllegalArgumentException();
+        return null;
     }
 
 }

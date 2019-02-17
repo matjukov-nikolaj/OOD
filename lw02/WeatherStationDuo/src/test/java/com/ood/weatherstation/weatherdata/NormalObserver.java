@@ -7,6 +7,7 @@ public class NormalObserver implements Observer<WeatherInfo> {
 
     @Override
     public void update(WeatherInfo data, Observable<WeatherInfo> observable) {
+
         System.out.println("I am a normal.");
     }
 

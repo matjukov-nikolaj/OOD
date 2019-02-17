@@ -70,4 +70,23 @@ public class WeatherDataTest {
         Assert.assertEquals(expectedOutput, output.toString());
     }
 
+    @Test
+    public void has_indicators_inside_and_outside() {
+        WeatherData wdo = new WeatherData(ObservableType.OUT);
+        WeatherData wdi = new WeatherData(ObservableType.IN);
+
+        SimpleObserver simpleObserver = new SimpleObserver();
+        wdi.registerObserver(simpleObserver, 1);
+        wdo.registerObserver(simpleObserver, 1);
+
+        wdi.setMeasurements(1.0, 1.0, 1.0);
+        wdo.setMeasurements(1.0, 1.0, 1.0);
+
+        String expectedResult = "I'm a simple observer.\r\n" +
+                "Inside\r\n" +
+                "I'm a simple observer.\r\n" +
+                "Outside\r\n";
+        Assert.assertEquals(expectedResult, output.toString());
+    }
+
 }
