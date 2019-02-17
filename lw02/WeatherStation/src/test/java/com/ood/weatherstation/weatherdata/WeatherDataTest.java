@@ -33,16 +33,40 @@ public class WeatherDataTest {
         NormalObserver normalObserver1 = new NormalObserver();
         NormalObserver normalObserver2 = new NormalObserver();
 
-        wd.registerObserver(suicideObserver);
-        wd.registerObserver(normalObserver1);
-        wd.registerObserver(normalObserver2);
+        wd.registerObserver(suicideObserver, 1);
+        wd.registerObserver(normalObserver1, 2);
+        wd.registerObserver(normalObserver2, 3);
         try {
             wd.setMeasurements(1.0, 1.0, 1.0);
-            String expectedOutput = "I am a suicide.\r\nI am a normal.\r\nI am a normal.\r\n";
+            String expectedOutput = "I am a normal.\r\n" +
+                    "I am a normal.\r\n" +
+                    "I am a suicide.\r\n";
             Assert.assertEquals(expectedOutput, output.toString());
         } catch (Exception e) {
             fail();
         }
+    }
+
+    @Test
+    public void observers_have_priority() {
+        WeatherData wd = new WeatherData();
+        SuicideObserver suicideObserver = new SuicideObserver(wd);
+        NormalObserver normalObserver1 = new NormalObserver();
+        NormalObserver normalObserver2 = new NormalObserver();
+        NormalObserver normalObserver3 = new NormalObserver();
+
+        wd.registerObserver(suicideObserver, 1);
+        wd.registerObserver(normalObserver1, 2);
+        wd.registerObserver(normalObserver2, 3);
+        wd.registerObserver(suicideObserver, 5);
+        wd.registerObserver(normalObserver3, 10);
+
+        wd.setMeasurements(1.0, 1.0, 1.0);
+        String expectedOutput = "I am a normal.\r\n" +
+                "I am a suicide.\r\n" +
+                "I am a normal.\r\n" +
+                "I am a normal.\r\n";
+        Assert.assertEquals(expectedOutput, output.toString());
     }
 
 }

@@ -1,42 +1,50 @@
 package com.ood.weatherstation.observer;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import javafx.util.Pair;
+
+import java.util.*;
 
 public abstract class ObservableImpl<T> implements Observable<T> {
 
-    Set<Observer<T>> observers;
-    List<Observer<T>> remoteObservers;
+    Set<Pair<Integer, Observer<T>>> observers;
 
     public ObservableImpl() {
         this.observers = new HashSet<>();
-        this.remoteObservers = new ArrayList<>();
     }
 
     @Override
-    public void registerObserver(Observer<T> observer) {
-        observers.add(observer);
+    public void registerObserver(Observer<T> observer, Integer priority) {
+        removeObserver(observer);
+        observers.add(new Pair<>(priority, observer));
     }
 
     @Override
     public void notifyObserver() {
         T data = this.getChangedData();
-        Set<Observer<T>> tempObservers = new HashSet<>(this.observers);
-        for (Observer observer : tempObservers) {
+        List<Pair<Integer, Observer<T>>> tempObservers = new ArrayList<>(this.observers);
+        Collections.sort(tempObservers, new Comparator<Pair<Integer, Observer<T>>>() {
+            @Override
+            public int compare(Pair<Integer, Observer<T>> o1, Pair<Integer, Observer<T>> o2) {
+                return o2.getKey().compareTo(o1.getKey());
+            }
+        });
+        for (Pair<Integer, Observer<T>> observerPair : tempObservers) {
+            Observer<T> observer = observerPair.getValue();
             observer.update(data);
         }
-        for (Observer observer : this.remoteObservers) {
-            this.observers.remove(observer);
-        }
-        this.remoteObservers.clear();
     }
 
     @Override
     public void removeObserver(Observer<T> observer) {
-        observers.remove(observer);
-        this.remoteObservers.add(observer);
+        Set<Pair<Integer, Observer<T>>> newObservers = new HashSet<>();
+        for (Pair<Integer, Observer<T>> observerPair : this.observers) {
+            Observer<T> observerInSet = observerPair.getValue();
+            if (!observerInSet.equals(observer) && observerInSet.hashCode() != observer.hashCode()) {
+                newObservers.add(observerPair);
+            }
+        }
+        this.observers.clear();
+        this.observers.addAll(newObservers);
     }
 
     protected abstract T getChangedData();

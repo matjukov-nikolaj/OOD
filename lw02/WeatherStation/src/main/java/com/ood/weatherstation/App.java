@@ -3,11 +3,9 @@ package com.ood.weatherstation;
 import com.ood.weatherstation.weatherdata.Display;
 import com.ood.weatherstation.weatherdata.StatsDisplay;
 import com.ood.weatherstation.weatherdata.WeatherData;
-import org.apache.log4j.Logger;
 
 public class App
 {
-    private static final Logger LOG = Logger.getLogger(App.class);
 
     public static void main( String[] args )
     {
@@ -15,10 +13,10 @@ public class App
 
         Display display = new Display();
 
-        wd.registerObserver(display);
+        wd.registerObserver(display, 1);
 
         StatsDisplay statsDisplay = new StatsDisplay();
-        wd.registerObserver(statsDisplay);
+        wd.registerObserver(statsDisplay, 2);
 
         wd.setMeasurements(3.0, 0.7, 760.0);
         wd.setMeasurements(4.0, 0.8, 761.0);
