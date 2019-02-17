@@ -1,10 +1,15 @@
 package com.ood.weatherstation.observer;
 
+import java.util.HashSet;
 import java.util.Set;
 
 public abstract class ObservableImpl<T> implements Observable<T> {
 
      Set<Observer<T>> observers;
+
+     public ObservableImpl() {
+          this.observers = new HashSet<>();
+     }
 
      @Override
      public void registerObserver(Observer<T> observer) {
