@@ -7,8 +7,8 @@ public class AngularValuesStatistic {
     private static final Logger LOG = Logger.getLogger(AngularValuesStatistic.class);
 
     private String name;
-    private Double sin;
-    private Double cos;
+    private double sin;
+    private double cos;
     private Integer count;
 
     public AngularValuesStatistic(String name) {
@@ -19,7 +19,7 @@ public class AngularValuesStatistic {
     }
 
     public void display() {
-        Double avg = this.calculateAverage();
+        double avg = this.calculateAverage();
         LOG.info("Average " + this.name + " " + (avg < 0 ? avg + 360 : avg) );
     }
 
@@ -29,7 +29,7 @@ public class AngularValuesStatistic {
         ++count;
     }
 
-    private Double calculateAverage() {
+    private double calculateAverage() {
         return Math.atan2(this.sin / this.count, this.cos / this.count) * 180 / Math.PI;
     }
 

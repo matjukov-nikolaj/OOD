@@ -4,33 +4,33 @@ import com.ood.weatherstation.observer.ObservableImpl;
 
 public class WeatherData extends ObservableImpl<WeatherInfo> {
 
-    private Double temperature = 0.0;
+    private double temperature = 0.0;
 
-    private Double humidity = 0.0;
+    private double humidity = 0.0;
 
-    private Double pressure = 760.0;
+    private double pressure = 760.0;
 
-    private Double windSpeed = 0.0;
+    private double windSpeed = 0.0;
 
-    private Double windDir = 0.0;
+    private double windDir = 0.0;
 
-    public Double getTemperature() {
+    public double getTemperature() {
         return this.temperature;
     }
 
-    public Double getHumidity() {
+    public double getHumidity() {
         return humidity;
     }
 
-    public Double getPressure() {
+    public double getPressure() {
         return pressure;
     }
 
-    public Double getWindSpeed() {
+    public double getWindSpeed() {
         return windSpeed;
     }
 
-    public Double getWindDir() {
+    public double getWindDir() {
         return windDir;
     }
 
@@ -38,7 +38,7 @@ public class WeatherData extends ObservableImpl<WeatherInfo> {
         notifyObserver();
     }
 
-    public void setMeasurements(Double temp, Double humidity, Double pressure, Double windSpeed, Double windDir) {
+    public void setMeasurements(double temp, double humidity, double pressure, double windSpeed, double windDir) {
         this.humidity = humidity;
         this.temperature = temp;
         this.pressure = pressure;

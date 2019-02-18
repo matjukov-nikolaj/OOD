@@ -6,10 +6,10 @@ public class ValueStatistic {
 
     private static final Logger LOG = Logger.getLogger(ValueStatistic.class);
 
-    private Double minValue;
-    private Double maxValue;
-    private Double storage;
-    private Integer count;
+    private double minValue;
+    private double maxValue;
+    private double storage;
+    private int count;
     private String name;
 
     public ValueStatistic(String name) {
@@ -28,7 +28,7 @@ public class ValueStatistic {
         LOG.info("################");
     }
 
-    public void accumulate(Double value) {
+    public void accumulate(double value) {
         if (value < this.minValue) {
             this.minValue = value;
         }
@@ -39,15 +39,15 @@ public class ValueStatistic {
         ++this.count;
     }
 
-    public Double getMaxValue() {
+    public double getMaxValue() {
         return maxValue;
     }
 
-    public Double getMinValue() {
+    public double getMinValue() {
         return minValue;
     }
 
-    public Double getAverage() {
+    public double getAverage() {
         return this.storage / this.count;
     }
 }

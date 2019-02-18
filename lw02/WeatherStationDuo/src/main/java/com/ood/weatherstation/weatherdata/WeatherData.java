@@ -11,13 +11,13 @@ public class WeatherData extends ObservableImpl<WeatherInfo> {
 
     private ObservableType type;
 
-    private Double temperature = 0.0;
+    private double temperature = 0.0;
 
-    private Double humidity = 0.0;
+    private double humidity = 0.0;
 
-    private Double pressure = 760.0;
+    private double pressure = 760.0;
 
-    public void registerObserver(BasicDisplay<WeatherInfo> observer, Integer priority) {
+    public void registerObserver(BasicDisplay<WeatherInfo> observer, int priority) {
         super.registerObserver(observer, priority);
         switch (this.type)
         {
@@ -37,15 +37,15 @@ public class WeatherData extends ObservableImpl<WeatherInfo> {
         observer.unregisterObservable(this);
     }
 
-    public Double getTemperature() {
+    public double getTemperature() {
         return this.temperature;
     }
 
-    public Double getHumidity() {
+    public double getHumidity() {
         return humidity;
     }
 
-    public Double getPressure() {
+    public double getPressure() {
         return pressure;
     }
 
@@ -53,7 +53,7 @@ public class WeatherData extends ObservableImpl<WeatherInfo> {
         notifyObserver();
     }
 
-    public void setMeasurements(Double temp, Double humidity, Double pressure) {
+    public void setMeasurements(double temp, double humidity, double pressure) {
         this.humidity = humidity;
         this.temperature = temp;
         this.pressure = pressure;

@@ -39,7 +39,7 @@ public abstract class ObservableImpl<T> implements Observable<T> {
         Set<Pair<Integer, Observer<T>>> newObservers = new HashSet<>();
         for (Pair<Integer, Observer<T>> observerPair : this.observers) {
             Observer<T> observerInSet = observerPair.getValue();
-            if (!observerInSet.equals(observer) && observerInSet.hashCode() != observer.hashCode()) {
+            if (observerInSet != observer) {
                 newObservers.add(observerPair);
             }
         }

@@ -1,50 +1,44 @@
 package com.ood.weatherstation.observer;
 
-import javafx.util.Pair;
-
 import java.util.*;
 
 public abstract class ObservableImpl<T> implements Observable<T> {
 
-    Set<Pair<Integer, Observer<T>>> observers;
+    TreeMap<Integer, Observer<T>> observers;
 
     public ObservableImpl() {
-        this.observers = new HashSet<>();
+        this.observers = new TreeMap<>();
     }
 
     @Override
-    public void registerObserver(Observer<T> observer, Integer priority) {
+    public void registerObserver(Observer<T> observer, int priority) {
         removeObserver(observer);
-        observers.add(new Pair<>(priority, observer));
+        observers.put(priority, observer);
     }
 
     @Override
     public void notifyObserver() {
         T data = this.getChangedData();
-        List<Pair<Integer, Observer<T>>> tempObservers = new ArrayList<>(this.observers);
-        Collections.sort(tempObservers, new Comparator<Pair<Integer, Observer<T>>>() {
-            @Override
-            public int compare(Pair<Integer, Observer<T>> o1, Pair<Integer, Observer<T>> o2) {
-                return o2.getKey().compareTo(o1.getKey());
-            }
-        });
-        for (Pair<Integer, Observer<T>> observerPair : tempObservers) {
-            Observer<T> observer = observerPair.getValue();
+        TreeMap<Integer, Observer<T>> tempObservers = new TreeMap<>(Collections.reverseOrder());
+        tempObservers.putAll(this.observers);
+        for (Map.Entry<Integer, Observer<T>> entry : tempObservers.entrySet()) {
+            Observer<T> observer = entry.getValue();
             observer.update(data, this);
         }
     }
 
     @Override
     public void removeObserver(Observer<T> observer) {
-        Set<Pair<Integer, Observer<T>>> newObservers = new HashSet<>();
-        for (Pair<Integer, Observer<T>> observerPair : this.observers) {
-            Observer<T> observerInSet = observerPair.getValue();
-            if (!observerInSet.equals(observer) && observerInSet.hashCode() != observer.hashCode()) {
-                newObservers.add(observerPair);
+        TreeMap<Integer, Observer<T>> newObservers = new TreeMap<>();
+        for (Map.Entry<Integer, Observer<T>> entry : this.observers.entrySet()) {
+            Observer<T> observerInSet = entry.getValue();
+            int priority = entry.getKey();
+            if (observerInSet != observer) {
+                newObservers.put(priority, observerInSet);
             }
         }
         this.observers.clear();
-        this.observers.addAll(newObservers);
+        this.observers.putAll(newObservers);
     }
 
     protected abstract T getChangedData();
