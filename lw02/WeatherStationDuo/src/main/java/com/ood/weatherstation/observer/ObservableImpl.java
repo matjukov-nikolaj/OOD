@@ -27,7 +27,7 @@ public abstract class ObservableImpl<T> implements Observable<T> {
     public void notifyObserver() {
         T data = this.getChangedData();
         TreeMap<Integer, List<Observer<T>>> tempObservers = new TreeMap<>(Collections.reverseOrder());
-        tempObservers.putAll(this.observers);
+        tempObservers.putAll(getCopyOfObservers());
         for (Map.Entry<Integer, List<Observer<T>>> entry : tempObservers.entrySet()) {
             for (Observer<T> observer : entry.getValue()) {
                 observer.update(data, this);
@@ -46,6 +46,17 @@ public abstract class ObservableImpl<T> implements Observable<T> {
         if (value.isEmpty()) {
             this.observers.remove(observerToRemove.firstKey());
         }
+    }
+
+    private TreeMap<Integer, List<Observer<T>>> getCopyOfObservers() {
+        TreeMap<Integer, List<Observer<T>>> copy = new TreeMap<>();
+        for (Map.Entry<Integer, List<Observer<T>>> entry : this.observers.entrySet()) {
+            List<Observer<T>> value = entry.getValue();
+            Integer key = entry.getKey();
+            List<Observer<T>> copyOfValue = new ArrayList<>(value);
+            copy.put(key, copyOfValue);
+        }
+        return copy;
     }
 
     private TreeMap<Integer, List<Observer<T>>> getObserverToRemove(Observer<T> observer) {
