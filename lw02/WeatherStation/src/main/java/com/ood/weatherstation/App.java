@@ -17,6 +17,8 @@ public class App
 
         StatsDisplay statsDisplay = new StatsDisplay();
         wd.registerObserver(statsDisplay, 2);
+        wd.registerObserver(statsDisplay, 1);
+        wd.registerObserver(statsDisplay, 3);
 
         wd.setMeasurements(3.0, 0.7, 760.0);
         wd.setMeasurements(4.0, 0.8, 761.0);
