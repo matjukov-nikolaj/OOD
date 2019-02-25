@@ -19,4 +19,5 @@ public enum ObservableType {
         observableTypeMap.put(OUT.value, OUT);
         return observableTypeMap.get(value.toLowerCase());
     }
+
 }

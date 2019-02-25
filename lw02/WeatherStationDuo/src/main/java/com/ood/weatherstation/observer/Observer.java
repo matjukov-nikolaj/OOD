@@ -1,7 +1,7 @@
 package com.ood.weatherstation.observer;
 
-public interface Observer<T> {
+public interface Observer<T> extends ObserverType {
 
-    void update(T data, Observable<T> observable);
+    void update(T data);
 
 }

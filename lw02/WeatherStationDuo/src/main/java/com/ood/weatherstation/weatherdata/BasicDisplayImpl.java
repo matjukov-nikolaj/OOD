@@ -1,42 +1,37 @@
 package com.ood.weatherstation.weatherdata;
 
 import com.ood.weatherstation.exception.IncorrectObservableType;
-import com.ood.weatherstation.observer.Observable;
+import com.ood.weatherstation.function.Function;
 import com.ood.weatherstation.observer.ObservableType;
+import com.ood.weatherstation.observer.Observer;
 
-public abstract class BasicDisplayImpl<T> implements BasicDisplay<T> {
+public class BasicDisplayImpl<T> implements BasicDisplay<T> {
 
-    private Observable<T> insideObservable;
+    public Observer<T> insideObservable;
 
-    private Observable<T> outsideObservable;
+    public Observer<T> outsideObservable;
 
     @Override
-    public void registerInsideObservable(Observable<T> observable) {
+    public void setAsInsideObservable(Observer<T> observable) {
         this.insideObservable = observable;
     }
 
     @Override
-    public void registerOutsideObservable(Observable<T> observable) {
+    public void setAsOutsideObservable(Observer<T> observable) {
         this.outsideObservable = observable;
     }
 
-    @Override
-    public void unregisterObservable(Observable<T> observable) {
-        if (observable == this.insideObservable) {
-            this.insideObservable = null;
-        } else if (observable == this.outsideObservable) {
-            this.outsideObservable = null;
+    public void actionHandler(ObservableType type, Function inAction, Function outAction) throws IncorrectObservableType {
+        switch (type) {
+            case IN:
+                inAction.perform();
+                break;
+            case OUT:
+                outAction.perform();
+                break;
+            default:
+                throw new IncorrectObservableType("Incorrect observable type");
         }
-    }
-
-    @Override
-    public ObservableType getType(Observable<T> observable) throws IncorrectObservableType {
-        if (observable == this.insideObservable) {
-            return ObservableType.IN;
-        } else if (observable == this.outsideObservable) {
-            return ObservableType.OUT;
-        }
-        throw new IncorrectObservableType("Incorrect observable type");
     }
 
 }

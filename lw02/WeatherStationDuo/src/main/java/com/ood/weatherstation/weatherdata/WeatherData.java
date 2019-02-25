@@ -1,13 +1,11 @@
 package com.ood.weatherstation.weatherdata;
 
+import com.ood.weatherstation.exception.IncorrectObservableType;
 import com.ood.weatherstation.observer.ObservableImpl;
 import com.ood.weatherstation.observer.ObservableType;
+import com.ood.weatherstation.observer.Observer;
 
 public class WeatherData extends ObservableImpl<WeatherInfo> {
-
-    public WeatherData(ObservableType type) {
-        this.type = type;
-    }
 
     private ObservableType type;
 
@@ -17,24 +15,24 @@ public class WeatherData extends ObservableImpl<WeatherInfo> {
 
     private double pressure = 760.0;
 
-    public void registerObserver(BasicDisplay<WeatherInfo> observer, int priority) {
-        super.registerObserver(observer, priority);
-        switch (this.type)
-        {
-            case IN:
-                observer.registerInsideObservable(this);
-                break;
-            case OUT:
-                observer.registerOutsideObservable(this);
-                break;
-            default:
-                break;
-        }
+    public WeatherData(ObservableType type) {
+        this.type = type;
     }
 
-    public void removeObserver(BasicDisplay<WeatherInfo> observer) {
+    @Override
+    public void registerObserver(Observer<WeatherInfo> observer, int priority) throws IncorrectObservableType{
+        if (observer.getType() != this.type) {
+            throw new IncorrectObservableType("Incorrect observable type.");
+        }
+        super.registerObserver(observer, priority);
+    }
+
+    @Override
+    public void removeObserver(Observer<WeatherInfo> observer) throws IncorrectObservableType {
+        if (observer.getType() != this.type) {
+            throw new IncorrectObservableType("Incorrect observable type.");
+        }
         super.removeObserver(observer);
-        observer.unregisterObservable(this);
     }
 
     public double getTemperature() {

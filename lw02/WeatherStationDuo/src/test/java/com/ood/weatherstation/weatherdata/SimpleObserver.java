@@ -1,27 +1,60 @@
 package com.ood.weatherstation.weatherdata;
 
 import com.ood.weatherstation.exception.IncorrectObservableType;
-import com.ood.weatherstation.observer.Observable;
+import com.ood.weatherstation.observer.ObservableType;
+import com.ood.weatherstation.observer.Observer;
+import org.apache.log4j.Logger;
 
-public class SimpleObserver extends BasicDisplayImpl<WeatherInfo> {
+public class SimpleObserver implements Observer<WeatherInfo> {
+
+    private static final Logger LOG = Logger.getLogger(SimpleObserver.class);
+
+    private WeatherStatistic inStats = new WeatherStatistic();
+    private WeatherStatistic outStats = new WeatherStatistic();
+
+    private BasicDisplayImpl<WeatherInfo> basicDisplay;
+
+    private ObservableType type;
+
+    public SimpleObserver(ObservableType type) {
+        this.basicDisplay = new BasicDisplayImpl<>();
+        this.type = type;
+        try {
+            this.basicDisplay.actionHandler(type,
+                    () -> {
+                        basicDisplay.setAsInsideObservable(this);
+                    },
+                    () -> {
+                        basicDisplay.setAsOutsideObservable(this);
+                    });
+        } catch (IncorrectObservableType e) {
+            LOG.error(e.getMessage());
+        }
+    }
 
     @Override
-    public void update(WeatherInfo data, Observable<WeatherInfo> observable) {
-        System.out.println("I'm a simple observer.");
+    public void update(WeatherInfo data) {
         try {
-            switch (this.getType(observable)) {
-                case IN:
-                    System.out.println("Inside");
-                    break;
-                case OUT:
-                    System.out.println("Outside");
-                    break;
-                default:
-                    break;
-            }
+            this.basicDisplay.actionHandler(type,
+                    () -> {
+                        System.out.println("Simple Inside.");
+                    },
+                    () -> {
+                        System.out.println("Simple Outside.");
+                    });
         } catch (IncorrectObservableType e) {
-            System.out.println(e.getMessage());
+            LOG.error(e.getMessage());
         }
+    }
+
+    @Override
+    public ObservableType getType() {
+        return type;
+    }
+
+    @Override
+    public void setType(ObservableType type) {
+        this.type = type;
     }
 
 }

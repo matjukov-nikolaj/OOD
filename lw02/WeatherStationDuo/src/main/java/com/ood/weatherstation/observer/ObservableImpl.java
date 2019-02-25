@@ -1,5 +1,7 @@
 package com.ood.weatherstation.observer;
 
+import com.ood.weatherstation.exception.IncorrectObservableType;
+
 import java.util.*;
 
 public abstract class ObservableImpl<T> implements Observable<T> {
@@ -11,7 +13,7 @@ public abstract class ObservableImpl<T> implements Observable<T> {
     }
 
     @Override
-    public void registerObserver(Observer<T> observer, int priority) {
+    public void registerObserver(Observer<T> observer, int priority) throws IncorrectObservableType {
         this.removeObserver(observer);
         if (this.observers.containsKey(priority)) {
             List<Observer<T>> observerList = this.observers.get(priority);
@@ -30,13 +32,13 @@ public abstract class ObservableImpl<T> implements Observable<T> {
         tempObservers.putAll(getCopyOfObservers());
         for (Map.Entry<Integer, List<Observer<T>>> entry : tempObservers.entrySet()) {
             for (Observer<T> observer : entry.getValue()) {
-                observer.update(data, this);
+                observer.update(data);
             }
         }
     }
 
     @Override
-    public void removeObserver(Observer<T> observer) {
+    public void removeObserver(Observer<T> observer) throws IncorrectObservableType {
         TreeMap<Integer, List<Observer<T>>> observerToRemove = getObserverToRemove(observer);
         if (observerToRemove.isEmpty()) {
             return;
