@@ -9,25 +9,15 @@ public class NormalObserver implements Observer<WeatherInfo> {
 
     private static final Logger LOG = Logger.getLogger(Display.class);
 
-    private BasicDisplayImpl<WeatherInfo> basicDisplay;
-
     private ObservableType type;
 
     public NormalObserver(ObservableType type) throws IncorrectObservableType {
-        this.basicDisplay = new BasicDisplayImpl<>();
         this.type = type;
-        this.basicDisplay.actionHandler(type,
-                () -> {
-                    this.basicDisplay.setAsInsideObservable(this);
-                },
-                () -> {
-                    this.basicDisplay.setAsOutsideObservable(this);
-                });
     }
 
     public void update(WeatherInfo data) {
         try {
-            this.basicDisplay.actionHandler(this.type,
+            ObservableTypeAction.actionHandler(this.type,
                     () -> {
                         System.out.println("Normal Inside.");
                     },

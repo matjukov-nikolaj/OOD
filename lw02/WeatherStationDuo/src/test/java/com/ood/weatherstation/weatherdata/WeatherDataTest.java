@@ -77,7 +77,7 @@ public class WeatherDataTest {
             wdo.removeObserver(normalObserver);
             fail();
         } catch (IncorrectObservableType e) {
-            Assert.assertEquals("Incorrect observable type", e.getMessage());
+            Assert.assertEquals("Incorrect observable type.", e.getMessage());
         }
     }
 
@@ -89,17 +89,7 @@ public class WeatherDataTest {
             wdo.registerObserver(normalObserver, 1);
             fail();
         } catch (IncorrectObservableType e) {
-            Assert.assertEquals("Incorrect observable type", e.getMessage());
-        }
-    }
-
-    @Test
-    public void throw_and_captures_exception_inside_constructor_if_trying_to_create_incorrect_observable_type() {
-        try {
-            NormalObserver normalObserver = new NormalObserver(ObservableType.ERROR);
-            fail();
-        } catch (IncorrectObservableType e) {
-            Assert.assertEquals("Incorrect observable type", e.getMessage());
+            Assert.assertEquals("Incorrect observable type.", e.getMessage());
         }
     }
 

@@ -9,29 +9,15 @@ public class Display implements Observer<WeatherInfo> {
 
     private static final Logger LOG = Logger.getLogger(Display.class);
 
-    private BasicDisplayImpl<WeatherInfo> basicDisplay;
-
     private ObservableType type;
 
     public Display(ObservableType type) {
-        this.basicDisplay = new BasicDisplayImpl<>();
         this.type = type;
-        try {
-            this.basicDisplay.actionHandler(type,
-                    () -> {
-                        this.basicDisplay.setAsInsideObservable(this);
-                    },
-                    () -> {
-                        this.basicDisplay.setAsOutsideObservable(this);
-                    });
-        } catch (IncorrectObservableType e) {
-            LOG.error(e.getMessage());
-        }
     }
 
     public void update(WeatherInfo data) {
         try {
-            this.basicDisplay.actionHandler(this.type,
+            ObservableTypeAction.actionHandler(this.type,
                     () -> {
                         LOG.info("Inside: ");
                     },

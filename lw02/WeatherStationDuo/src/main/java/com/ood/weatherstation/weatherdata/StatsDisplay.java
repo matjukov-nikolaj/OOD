@@ -12,30 +12,16 @@ public class StatsDisplay implements Observer<WeatherInfo> {
     private WeatherStatistic inStats = new WeatherStatistic();
     private WeatherStatistic outStats = new WeatherStatistic();
 
-    private BasicDisplayImpl<WeatherInfo> basicDisplay;
-
     private ObservableType type;
 
     public StatsDisplay(ObservableType type) {
-        this.basicDisplay = new BasicDisplayImpl<>();
         this.type = type;
-        try {
-            this.basicDisplay.actionHandler(type,
-                    () -> {
-                        basicDisplay.setAsInsideObservable(this);
-                    },
-                    () -> {
-                        basicDisplay.setAsOutsideObservable(this);
-                    });
-        } catch (IncorrectObservableType e) {
-            LOG.error(e.getMessage());
-        }
     }
 
     @Override
     public void update(WeatherInfo data) {
         try {
-            this.basicDisplay.actionHandler(type,
+            ObservableTypeAction.actionHandler(this.type,
                     () -> {
                         LOG.info("Inside: ");
                         inStats.update(data);
