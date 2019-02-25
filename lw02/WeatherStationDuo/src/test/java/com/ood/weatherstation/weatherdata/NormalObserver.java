@@ -13,20 +13,16 @@ public class NormalObserver implements Observer<WeatherInfo> {
 
     private ObservableType type;
 
-    public NormalObserver(ObservableType type) {
+    public NormalObserver(ObservableType type) throws IncorrectObservableType {
         this.basicDisplay = new BasicDisplayImpl<>();
         this.type = type;
-        try {
-            this.basicDisplay.actionHandler(type,
-                    () -> {
-                        this.basicDisplay.setAsInsideObservable(this);
-                    },
-                    () -> {
-                        this.basicDisplay.setAsOutsideObservable(this);
-                    });
-        } catch (IncorrectObservableType e) {
-            LOG.error(e.getMessage());
-        }
+        this.basicDisplay.actionHandler(type,
+                () -> {
+                    this.basicDisplay.setAsInsideObservable(this);
+                },
+                () -> {
+                    this.basicDisplay.setAsOutsideObservable(this);
+                });
     }
 
     public void update(WeatherInfo data) {

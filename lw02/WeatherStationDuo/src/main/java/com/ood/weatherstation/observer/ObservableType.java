@@ -5,7 +5,8 @@ import java.util.Map;
 
 public enum ObservableType {
     IN("in"),
-    OUT("out");
+    OUT("out"),
+    ERROR("error");
 
     private final String value;
 

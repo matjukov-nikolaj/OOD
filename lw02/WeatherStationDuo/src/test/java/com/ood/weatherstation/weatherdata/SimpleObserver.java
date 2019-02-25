@@ -37,10 +37,10 @@ public class SimpleObserver implements Observer<WeatherInfo> {
         try {
             this.basicDisplay.actionHandler(type,
                     () -> {
-                        System.out.println("Simple Inside.");
+                        System.out.println("Simple Inside. I have statistic.");
                     },
                     () -> {
-                        System.out.println("Simple Outside.");
+                        System.out.println("Simple Outside. I have statistic.");
                     });
         } catch (IncorrectObservableType e) {
             LOG.error(e.getMessage());
