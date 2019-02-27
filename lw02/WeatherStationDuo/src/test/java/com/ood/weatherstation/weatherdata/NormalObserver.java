@@ -1,42 +1,29 @@
 package com.ood.weatherstation.weatherdata;
 
 import com.ood.weatherstation.exception.IncorrectObservableType;
-import com.ood.weatherstation.observer.ObservableType;
+import com.ood.weatherstation.observer.Observable;
 import com.ood.weatherstation.observer.Observer;
-import org.apache.log4j.Logger;
 
 public class NormalObserver implements Observer<WeatherInfo> {
 
-    private static final Logger LOG = Logger.getLogger(Display.class);
+    private Observable<WeatherInfo> inObservable;
 
-    private ObservableType type;
+    private Observable<WeatherInfo> outObservable;
 
-    public NormalObserver(ObservableType type) throws IncorrectObservableType {
-        this.type = type;
+    public NormalObserver(Observable<WeatherInfo> inObservable,
+                   Observable<WeatherInfo> outObservable) {
+        this.inObservable = inObservable;
+        this.outObservable = outObservable;
     }
 
-    public void update(WeatherInfo data) {
-        try {
-            ObservableTypeAction.actionHandler(this.type,
-                    () -> {
-                        System.out.println("Normal Inside.");
-                    },
-                    () -> {
-                        System.out.println("Normal Outside.");
-                    });
-        } catch (IncorrectObservableType e) {
-            LOG.error(e.getMessage());
+    public void update(Observable<WeatherInfo> observable, WeatherInfo data) throws IncorrectObservableType  {
+        if (observable == this.inObservable) {
+            System.out.println("Normal Inside.");
+        } else if (observable == this.outObservable) {
+            System.out.println("Normal Outside.");
+        } else {
+            throw new IncorrectObservableType("Incorrect observable type.");
         }
-    }
-
-    @Override
-    public ObservableType getType() {
-        return type;
-    }
-
-    @Override
-    public void setType(ObservableType type) {
-        this.type = type;
     }
 
 

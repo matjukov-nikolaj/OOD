@@ -1,7 +1,9 @@
 package com.ood.weatherstation.observer;
 
-public interface Observer<T> extends ObserverType {
+import com.ood.weatherstation.exception.IncorrectObservableType;
 
-    void update(T data);
+public interface Observer<T> {
+
+    void update(Observable<T> observable, T data) throws IncorrectObservableType;
 
 }

@@ -1,7 +1,6 @@
 package com.ood.weatherstation.weatherdata;
 
-import com.ood.weatherstation.exception.IncorrectObservableType;
-import com.ood.weatherstation.observer.ObservableType;
+import com.ood.weatherstation.observer.Observable;
 import com.ood.weatherstation.observer.Observer;
 import org.apache.log4j.Logger;
 
@@ -12,39 +11,26 @@ public class StatsDisplay implements Observer<WeatherInfo> {
     private WeatherStatistic inStats = new WeatherStatistic();
     private WeatherStatistic outStats = new WeatherStatistic();
 
-    private ObservableType type;
+    private Observable<WeatherInfo> inObservable;
 
-    public StatsDisplay(ObservableType type) {
-        this.type = type;
+    private Observable<WeatherInfo> outObservable;
+
+    public StatsDisplay(Observable<WeatherInfo> inObservable,
+                   Observable<WeatherInfo> outObservable) {
+        this.inObservable = inObservable;
+        this.outObservable = outObservable;
     }
-
     @Override
-    public void update(WeatherInfo data) {
-        try {
-            ObservableTypeAction.actionHandler(this.type,
-                    () -> {
-                        LOG.info("Inside: ");
-                        inStats.update(data);
-                        inStats.display();
-                    },
-                    () -> {
-                        LOG.info("Outside: ");
-                        outStats.update(data);
-                        outStats.display();
-                    });
-        } catch (IncorrectObservableType e) {
-            LOG.error(e.getMessage());
+    public void update(Observable<WeatherInfo> observable, WeatherInfo data) {
+        if (observable == this.inObservable) {
+            LOG.info("Inside: ");
+            inStats.update(data);
+            inStats.display();
+        } else if (observable == this.outObservable) {
+            LOG.info("Outside: ");
+            outStats.update(data);
+            outStats.display();
         }
-    }
-
-    @Override
-    public ObservableType getType() {
-        return type;
-    }
-
-    @Override
-    public void setType(ObservableType type) {
-        this.type = type;
     }
 
 }
