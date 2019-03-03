@@ -1,6 +1,6 @@
 package com.ood.factory;
 
-import com.ood.exceptions.WrongAmount;
+import com.ood.exceptions.WrongAmountException;
 
 public class RegularPolygon extends Shape{
 
@@ -10,10 +10,10 @@ public class RegularPolygon extends Shape{
 
     private double radius;
 
-    public RegularPolygon(Point center, int vertexCount, double radius, Color color) throws WrongAmount {
+    public RegularPolygon(Point center, int vertexCount, double radius, Color color) throws WrongAmountException {
         super(color);
         if (vertexCount < 0) {
-            throw new WrongAmount("The number of angles can not be less than zero.");
+            throw new WrongAmountException("The number of angles can not be less than zero.");
         }
         this.vertexCount = vertexCount;
         this.center = center;

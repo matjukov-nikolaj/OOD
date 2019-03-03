@@ -23,4 +23,15 @@ public enum Color {
         return typeToString.get(this);
     }
 
+    public static Color createFromString(String mode) {
+        HashMap<String, Color> stringToColor = new HashMap<>();
+        stringToColor.put("green", GREEN);
+        stringToColor.put("red", RED);
+        stringToColor.put("blue", BLUE);
+        stringToColor.put("yellow", YELLOW);
+        stringToColor.put("pink", PINK);
+        stringToColor.put("black", BLACK);
+        return stringToColor.get(mode);
+    }
+
 }

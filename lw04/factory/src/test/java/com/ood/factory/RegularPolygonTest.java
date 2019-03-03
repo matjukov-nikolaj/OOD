@@ -1,6 +1,6 @@
 package com.ood.factory;
 
-import com.ood.exceptions.WrongAmount;
+import com.ood.exceptions.WrongAmountException;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -10,8 +10,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
-
-import static org.junit.Assert.*;
 
 public class RegularPolygonTest {
 
@@ -65,7 +63,7 @@ public class RegularPolygonTest {
             }
 
             Assert.assertEquals(expectedResult, this.output.toString());
-        } catch (WrongAmount e) {
+        } catch (WrongAmountException e) {
             System.out.println(e.getMessage());
         }
     }
