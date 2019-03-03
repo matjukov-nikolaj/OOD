@@ -10,7 +10,7 @@ import java.io.PrintStream;
 
 import static org.junit.Assert.*;
 
-public class TriangleTest {
+public class RectangleTest {
 
     private ByteArrayOutputStream output = new ByteArrayOutputStream();
     private final PrintStream old = System.out;
@@ -27,29 +27,36 @@ public class TriangleTest {
     }
 
     @Test
-    public void can_draw_triangle() {
-        Point vertex1 = new Point(0, 0);
-        Point vertex2 = new Point(1,1);
-        Point vertex3 = new Point(1, 0);
-        Triangle triangle = new Triangle(vertex1, vertex2, vertex3, Color.RED);
+    public void can_draw_rectaingle() {
+        Point leftTop = new Point(0, 1);
+        Point rightBottom = new Point(1,0);
+        Rectangle rectangle = new Rectangle(leftTop, rightBottom, Color.RED);
         Canvas canvas = new CanvasImpl();
-        triangle.draw(canvas);
+        rectangle.draw(canvas);
+        Point rightTop = new Point(rightBottom.x, leftTop.y);
+        Point leftBottom = new Point(leftTop.x, rightBottom.y);
         String expectedResult = "===========================\r\n" +
                 "DRAW LINE: \r\n" +
-                "  FROM : (" + vertex1.x + ", " + vertex1.y + ")\r\n" +
-                "  TO   : (" + vertex2.x + ", " + vertex2.y + ")\r\n" +
+                "  FROM : (" + leftTop.x + ", " + leftTop.y + ")\r\n" +
+                "  TO   : (" + rightTop.x + ", " + rightTop.y + ")\r\n" +
                 "  COLOR: " + Color.RED.toString() + "\r\n" +
                 "===========================\r\n" +
                 "===========================\r\n" +
                 "DRAW LINE: \r\n" +
-                "  FROM : (" + vertex2.x + ", " + vertex2.y + ")\r\n" +
-                "  TO   : (" + vertex3.x + ", " + vertex3.y + ")\r\n" +
+                "  FROM : (" + rightTop.x + ", " + rightTop.y + ")\r\n" +
+                "  TO   : (" + rightBottom.x + ", " + rightBottom.y + ")\r\n" +
                 "  COLOR: " + Color.RED.toString() + "\r\n" +
                 "===========================\r\n" +
                 "===========================\r\n" +
                 "DRAW LINE: \r\n" +
-                "  FROM : (" + vertex3.x + ", " + vertex3.y + ")\r\n" +
-                "  TO   : (" + vertex1.x + ", " + vertex1.y + ")\r\n" +
+                "  FROM : (" + rightBottom.x + ", " + rightBottom.y + ")\r\n" +
+                "  TO   : (" + leftBottom.x + ", " + leftBottom.y + ")\r\n" +
+                "  COLOR: " + Color.RED.toString() + "\r\n" +
+                "===========================\r\n"+
+                "===========================\r\n" +
+                "DRAW LINE: \r\n" +
+                "  FROM : (" + leftBottom.x + ", " + leftBottom.y + ")\r\n" +
+                "  TO   : (" + leftTop.x + ", " + leftTop.y + ")\r\n" +
                 "  COLOR: " + Color.RED.toString() + "\r\n" +
                 "===========================\r\n";
         Assert.assertEquals(expectedResult, this.output.toString());
