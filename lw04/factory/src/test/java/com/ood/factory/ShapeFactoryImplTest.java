@@ -51,4 +51,27 @@ public class ShapeFactoryImplTest {
         }
     }
 
+    @Test
+    public void throw_exception_if_user_write_incorrect_shape() {
+        ShapeFactory shapeFactory = new ShapeFactoryImpl();
+        try {
+            Shape shape = shapeFactory.createShape("error 0 0 6 3 red");
+            fail();
+        } catch (Exception e) {
+            assertEquals("Unknown shape.", e.getMessage());
+            assertEquals(UnknownShapeException.class, e.getClass());
+        }
+    }
+
+    @Test
+    public void throw_number_format_exception_when_user_entered_incorrect_number() {
+        ShapeFactory shapeFactory = new ShapeFactoryImpl();
+        try {
+            Shape shape = shapeFactory.createShape("rectangle 0 a0 6 3 red");
+            fail();
+        } catch (Exception e) {
+            assertEquals(NumberFormatException.class, e.getClass());
+        }
+    }
+
 }
