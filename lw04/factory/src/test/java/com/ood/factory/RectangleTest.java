@@ -27,7 +27,7 @@ public class RectangleTest {
     }
 
     @Test
-    public void can_draw_rectaingle() {
+    public void can_draw_rectangle() {
         Point leftTop = new Point(0, 1);
         Point rightBottom = new Point(1,0);
         Rectangle rectangle = new Rectangle(leftTop, rightBottom, Color.RED);
