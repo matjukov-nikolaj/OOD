@@ -5,7 +5,7 @@ public class Cappuccino extends Coffee {
     private CoffeeType type;
 
     public Cappuccino(CoffeeType type) {
-        super(type.toString() + "Cappuccino");
+        super(CoffeeType.toString(type) + "Cappuccino");
         this.type = type;
     }
 

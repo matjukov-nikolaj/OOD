@@ -5,7 +5,7 @@ public class Tea extends BeverageImpl {
     private TeaSort sort;
 
     public Tea(TeaSort sort) {
-        super(sort.toString());
+        super(TeaSort.toString(sort));
     }
 
     @Override

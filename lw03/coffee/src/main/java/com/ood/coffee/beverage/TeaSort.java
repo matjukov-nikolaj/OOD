@@ -1,6 +1,7 @@
 package com.ood.coffee.beverage;
 
 import java.util.HashMap;
+import java.util.Map;
 
 public enum TeaSort {
 
@@ -9,14 +10,20 @@ public enum TeaSort {
     GREEN,
     WHITE;
 
-    @Override
-    public String toString() {
-        HashMap<TeaSort, String> typeToString = new HashMap<>();
+    private static Map<TeaSort, String> typeToString = getTypeToStringMap();
+
+    private static Map<TeaSort, String> getTypeToStringMap() {
+        Map<TeaSort, String> typeToString = new HashMap<>();
         typeToString.put(BLACK, "Black tea");
         typeToString.put(GREEN, "Green tea");
         typeToString.put(RED, "Red tea");
         typeToString.put(WHITE, "White tea");
-        return typeToString.get(this);
+        return typeToString;
     }
+
+    public static String toString(TeaSort type) {
+        return typeToString.get(type);
+    }
+
 
 }

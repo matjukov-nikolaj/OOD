@@ -5,13 +5,13 @@ public class Milkshake extends BeverageImpl {
     private MilkshakeType type;
 
     public Milkshake(MilkshakeType type) {
-        super(type.toString() + "Milkshake");
+        super(MilkshakeType.toString(type) + "Milkshake");
         this.type = type;
     }
 
     @Override
     public double getCost() {
-        return this.type.getCostOfType();
+        return MilkshakeType.getCostOfType(this.type);
     }
 
 }

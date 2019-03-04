@@ -2,7 +2,7 @@ package com.ood;
 
 import com.ood.coffee.beverage.*;
 import com.ood.coffee.condiment.*;
-import com.ood.exceptions.WrongAmount;
+import com.ood.exceptions.WrongAmountException;
 import org.apache.log4j.Logger;
 
 public class App
@@ -24,7 +24,7 @@ public class App
             print(coffee);
             coffee = new ChocolateCrumbs(coffee, 20);
             print(coffee);
-        } catch (WrongAmount e) {
+        } catch (WrongAmountException e) {
             LOG.error(e.getMessage());
         }
 
@@ -61,7 +61,7 @@ public class App
             coffee = new Chocolate(coffee, 3);
             print(coffee);
             coffee = new Chocolate(coffee, 6);
-        } catch (WrongAmount e) {
+        } catch (WrongAmountException e) {
             LOG.error(e.getMessage());
         }
         print(coffee);

@@ -1,16 +1,16 @@
 package com.ood.coffee.condiment;
 
 import com.ood.coffee.beverage.Beverage;
-import com.ood.exceptions.WrongAmount;
+import com.ood.exceptions.WrongAmountException;
 
 public class CoconutFlakes extends CondimentDecorator {
 
     private int mass;
 
-    public CoconutFlakes(Beverage beverage, int mass) throws WrongAmount {
+    public CoconutFlakes(Beverage beverage, int mass) throws WrongAmountException {
         super(beverage);
         if (mass < 0) {
-            throw new WrongAmount("Incorrect amount of Coconut Flakes.");
+            throw new WrongAmountException("Incorrect amount of Coconut Flakes.");
         } else {
             this.mass = mass;
         }

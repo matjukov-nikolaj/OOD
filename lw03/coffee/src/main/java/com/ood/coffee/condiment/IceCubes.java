@@ -1,7 +1,7 @@
 package com.ood.coffee.condiment;
 
 import com.ood.coffee.beverage.Beverage;
-import com.ood.exceptions.WrongAmount;
+import com.ood.exceptions.WrongAmountException;
 
 public class IceCubes extends CondimentDecorator {
 
@@ -10,10 +10,10 @@ public class IceCubes extends CondimentDecorator {
     private IceCubeType type;
 
 
-    public IceCubes(Beverage beverage, int quantity, IceCubeType type) throws WrongAmount{
+    public IceCubes(Beverage beverage, int quantity, IceCubeType type) throws WrongAmountException {
         super(beverage);
         if (quantity < 0) {
-            throw new WrongAmount("Incorrect amount of Ice cubes.");
+            throw new WrongAmountException("Incorrect amount of Ice cubes.");
         } else {
             this.quantity = quantity;
         }
@@ -22,7 +22,7 @@ public class IceCubes extends CondimentDecorator {
 
     protected String getCondimentDescription() {
         String result = "";
-        result += this.type.toString();
+        result += IceCubeType.toString(this.type);
         result += " ice cubes x " + this.quantity;
         return result;
     }

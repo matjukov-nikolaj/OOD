@@ -5,7 +5,7 @@ public class Latte extends Coffee {
     private CoffeeType type;
 
     public Latte(CoffeeType type) {
-        super(type.toString() + "Latte");
+        super(CoffeeType.toString(type) + "Latte");
         this.type = type;
     }
 

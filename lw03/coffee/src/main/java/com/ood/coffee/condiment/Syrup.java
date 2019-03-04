@@ -12,7 +12,7 @@ public class Syrup extends CondimentDecorator {
     }
 
     protected String getCondimentDescription() {
-        return this.type.toString() + " syrup";
+        return SyrupType.toString(this.type) + " syrup";
     }
 
     protected double getCondimentCost() {

@@ -1,16 +1,16 @@
 package com.ood.coffee.condiment;
 
 import com.ood.coffee.beverage.Beverage;
-import com.ood.exceptions.WrongAmount;
+import com.ood.exceptions.WrongAmountException;
 
 public class Lemon extends CondimentDecorator {
 
     private int quantity;
 
-    public Lemon(Beverage beverage, int quantity) throws WrongAmount {
+    public Lemon(Beverage beverage, int quantity) throws WrongAmountException {
         super(beverage);
         if (quantity < 1) {
-            throw new WrongAmount("Incorrect amount of lemon.");
+            throw new WrongAmountException("Incorrect amount of lemon.");
         } else {
             this.quantity = quantity;
         }

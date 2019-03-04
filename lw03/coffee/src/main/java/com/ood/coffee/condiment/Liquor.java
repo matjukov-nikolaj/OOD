@@ -12,7 +12,7 @@ public class Liquor extends CondimentDecorator {
     }
 
     protected String getCondimentDescription() {
-        return this.type.toString() + "liquor";
+        return LiquorType.toString(this.type) + "liquor";
     }
 
     protected double getCondimentCost() {
