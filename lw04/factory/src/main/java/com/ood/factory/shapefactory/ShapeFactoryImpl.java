@@ -1,5 +1,6 @@
 package com.ood.factory.shapefactory;
 
+import com.ood.exceptions.IncorrectNumberOfArguments;
 import com.ood.exceptions.UnknownColorException;
 import com.ood.exceptions.UnknownShapeException;
 import com.ood.exceptions.WrongAmountException;
@@ -8,7 +9,7 @@ import com.ood.factory.shape.*;
 public class ShapeFactoryImpl implements ShapeFactory {
 
     @Override
-    public Shape createShape(String description) throws UnknownShapeException, WrongAmountException, UnknownColorException {
+    public Shape createShape(String description) throws UnknownShapeException, WrongAmountException, UnknownColorException, IncorrectNumberOfArguments {
 
         String[] parsedDescription = description.split(" ");
         switch (parsedDescription[0].toLowerCase()) {
@@ -26,9 +27,9 @@ public class ShapeFactoryImpl implements ShapeFactory {
         throw new UnknownShapeException();
     }
 
-    private Shape createRectangle(String[] parsedDescription) throws UnknownColorException {
+    private Shape createRectangle(String[] parsedDescription) throws UnknownColorException, IncorrectNumberOfArguments {
         if (parsedDescription.length != 6) {
-            throw new IllegalArgumentException();
+            throw new IncorrectNumberOfArguments();
         }
         Point leftTop = new Point(Double.parseDouble(parsedDescription[1]), Double.parseDouble(parsedDescription[2]));
         Point rightBottom = new Point(Double.parseDouble(parsedDescription[3]), Double.parseDouble(parsedDescription[4]));
@@ -37,9 +38,9 @@ public class ShapeFactoryImpl implements ShapeFactory {
         return new Rectangle(leftTop, rightBottom, color);
     }
 
-    private Shape createTriangle(String[] parsedDescription) throws UnknownColorException {
+    private Shape createTriangle(String[] parsedDescription) throws UnknownColorException, IncorrectNumberOfArguments {
         if (parsedDescription.length != 8) {
-            throw new IllegalArgumentException();
+            throw new IncorrectNumberOfArguments();
         }
         Point vertex1 = new Point(Double.parseDouble(parsedDescription[1]), Double.parseDouble(parsedDescription[2]));
         Point vertex2 = new Point(Double.parseDouble(parsedDescription[3]), Double.parseDouble(parsedDescription[4]));
@@ -49,9 +50,9 @@ public class ShapeFactoryImpl implements ShapeFactory {
         return new Triangle(vertex1, vertex2, vertex3, color);
     }
 
-    private Shape createEllipse(String[] parsedDescription) throws UnknownColorException {
+    private Shape createEllipse(String[] parsedDescription) throws UnknownColorException, IncorrectNumberOfArguments {
         if (parsedDescription.length != 6) {
-            throw new IllegalArgumentException();
+            throw new IncorrectNumberOfArguments();
         }
         Point center = new Point(Double.parseDouble(parsedDescription[1]), Double.parseDouble(parsedDescription[2]));
         double horizontalRadius = Double.parseDouble(parsedDescription[3]);
@@ -61,9 +62,9 @@ public class ShapeFactoryImpl implements ShapeFactory {
         return new Ellipse(center, horizontalRadius, verticalRadius, color);
     }
 
-    private Shape createPolygon(String[] parsedDescription) throws WrongAmountException, UnknownColorException {
+    private Shape createPolygon(String[] parsedDescription) throws WrongAmountException, UnknownColorException, IncorrectNumberOfArguments {
         if (parsedDescription.length != 6) {
-            throw new IllegalArgumentException();
+            throw new IncorrectNumberOfArguments();
         }
         Point center = new Point(Double.parseDouble(parsedDescription[1]), Double.parseDouble(parsedDescription[2]));
         int vertexCount = Integer.parseInt(parsedDescription[3]);
