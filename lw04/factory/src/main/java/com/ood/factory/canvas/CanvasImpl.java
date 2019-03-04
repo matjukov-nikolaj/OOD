@@ -16,9 +16,9 @@ public class CanvasImpl implements Canvas {
     public void drawLine(Point from, Point to) {
         System.out.println("===========================");
         System.out.println("DRAW LINE: ");
-        System.out.println("  FROM : (" + from.x + ", " + from.y + ")");
-        System.out.println("  TO   : (" + to.x + ", " + to.y + ")");
-        System.out.println("  COLOR: " + this.color.toString());
+        System.out.println("  FROM : (" + from.getX() + ", " + from.getY() + ")");
+        System.out.println("  TO   : (" + to.getX() + ", " + to.getY() + ")");
+        System.out.println("  COLOR: " + Color.toString(this.color));
         System.out.println("===========================");
     }
 
@@ -30,7 +30,7 @@ public class CanvasImpl implements Canvas {
         System.out.println("  TOP    : " + top);
         System.out.println("  WIDTH  : " + width);
         System.out.println("  HEIGHT : " + height);
-        System.out.println("  COLOR  : " + this.color.toString());
+        System.out.println("  COLOR  : " + Color.toString(this.color));
         System.out.println("===========================");
     }
 }

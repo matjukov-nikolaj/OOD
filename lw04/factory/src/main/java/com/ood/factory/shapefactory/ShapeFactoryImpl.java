@@ -33,7 +33,7 @@ public class ShapeFactoryImpl implements ShapeFactory {
         }
         Point leftTop = new Point(Double.parseDouble(parsedDescription[1]), Double.parseDouble(parsedDescription[2]));
         Point rightBottom = new Point(Double.parseDouble(parsedDescription[3]), Double.parseDouble(parsedDescription[4]));
-        Color color = Color.createFromString(parsedDescription[5]);
+        Color color = Color.toColor(parsedDescription[5]);
 
         return new Rectangle(leftTop, rightBottom, color);
     }
@@ -45,7 +45,7 @@ public class ShapeFactoryImpl implements ShapeFactory {
         Point vertex1 = new Point(Double.parseDouble(parsedDescription[1]), Double.parseDouble(parsedDescription[2]));
         Point vertex2 = new Point(Double.parseDouble(parsedDescription[3]), Double.parseDouble(parsedDescription[4]));
         Point vertex3 = new Point(Double.parseDouble(parsedDescription[5]), Double.parseDouble(parsedDescription[6]));
-        Color color = Color.createFromString(parsedDescription[7]);
+        Color color = Color.toColor(parsedDescription[7]);
 
         return new Triangle(vertex1, vertex2, vertex3, color);
     }
@@ -57,7 +57,7 @@ public class ShapeFactoryImpl implements ShapeFactory {
         Point center = new Point(Double.parseDouble(parsedDescription[1]), Double.parseDouble(parsedDescription[2]));
         double horizontalRadius = Double.parseDouble(parsedDescription[3]);
         double verticalRadius = Double.parseDouble(parsedDescription[4]);
-        Color color = Color.createFromString(parsedDescription[5]);
+        Color color = Color.toColor(parsedDescription[5]);
 
         return new Ellipse(center, horizontalRadius, verticalRadius, color);
     }
@@ -69,7 +69,7 @@ public class ShapeFactoryImpl implements ShapeFactory {
         Point center = new Point(Double.parseDouble(parsedDescription[1]), Double.parseDouble(parsedDescription[2]));
         int vertexCount = Integer.parseInt(parsedDescription[3]);
         double radius = Double.parseDouble(parsedDescription[4]);
-        Color color = Color.createFromString(parsedDescription[5]);
+        Color color = Color.toColor(parsedDescription[5]);
 
         return new RegularPolygon(center, vertexCount, radius, color);
     }

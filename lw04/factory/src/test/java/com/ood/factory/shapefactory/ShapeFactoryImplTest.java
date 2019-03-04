@@ -11,7 +11,7 @@ import static org.junit.Assert.*;
 public class ShapeFactoryImplTest {
 
     @Test
-    public void can_create_rectangle() {
+    public void canCreateRectangle() {
         ShapeFactory shapeFactory = new ShapeFactoryImpl();
         try {
             Shape shape = shapeFactory.createShape("rectangle 0 1 1 0 red");
@@ -22,7 +22,7 @@ public class ShapeFactoryImplTest {
     }
 
     @Test
-    public void can_create_triangle() {
+    public void canCreateTriangle() {
         ShapeFactory shapeFactory = new ShapeFactoryImpl();
         try {
             Shape shape = shapeFactory.createShape("triangle 0 0 1 1 1 0 green");
@@ -33,7 +33,7 @@ public class ShapeFactoryImplTest {
     }
 
     @Test
-    public void can_create_ellipse() {
+    public void canCreateEllipse() {
         ShapeFactory shapeFactory = new ShapeFactoryImpl();
         try {
             Shape shape = shapeFactory.createShape("ellipse 0 0 6 3 black");
@@ -44,7 +44,7 @@ public class ShapeFactoryImplTest {
     }
 
     @Test
-    public void can_create_polygon() {
+    public void canCreatePolygon() {
         ShapeFactory shapeFactory = new ShapeFactoryImpl();
         try {
             Shape shape = shapeFactory.createShape("polygon 0 0 6 3 red");
@@ -55,7 +55,7 @@ public class ShapeFactoryImplTest {
     }
 
     @Test
-    public void throw_exception_if_user_write_incorrect_shape() {
+    public void throwExceptionIfUserWriteIncorrectShape() {
         ShapeFactory shapeFactory = new ShapeFactoryImpl();
         try {
             Shape shape = shapeFactory.createShape("error 0 0 6 3 red");
@@ -67,7 +67,7 @@ public class ShapeFactoryImplTest {
     }
 
     @Test
-    public void throw_number_format_exception_when_user_entered_incorrect_number() {
+    public void throwNumberFormatExceptionWhenUserEnteredIncorrectNumber() {
         ShapeFactory shapeFactory = new ShapeFactoryImpl();
         try {
             Shape shape = shapeFactory.createShape("rectangle 0 a0 6 3 red");
@@ -78,7 +78,7 @@ public class ShapeFactoryImplTest {
     }
 
     @Test
-    public void throw_null_pointer_exception_when_user_entered_incorrect_color() {
+    public void throwNullPointerExceptionWhenUserEnteredIncorrectColor() {
         ShapeFactory shapeFactory = new ShapeFactoryImpl();
         try {
             Shape shape = shapeFactory.createShape("rectangle 0 0 6 3 error");
@@ -90,7 +90,7 @@ public class ShapeFactoryImplTest {
 
 
     @Test
-    public void throw_incorrect_number_of_arguments_exception_when_trying_to_enter_an_incorrect_number_of_arguments() {
+    public void throwIncorrectNumberOfArgumentsExceptionWhenTryingToEnterAnIncorrectNumberOfArguments() {
         ShapeFactory shapeFactory = new ShapeFactoryImpl();
         try {
             Shape shape = shapeFactory.createShape("rectangle 0 0 6 3 red error");

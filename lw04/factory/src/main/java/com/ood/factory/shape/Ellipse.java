@@ -22,7 +22,7 @@ public class Ellipse extends Shape {
     public void draw(Canvas canvas) {
         canvas.setColor(getColor());
 
-        canvas.drawEllipse(this.center.x - this.horizontalRadius, this.center.y - this.verticalRadius,
+        canvas.drawEllipse(this.center.getX() - this.horizontalRadius, this.center.getY() - this.verticalRadius,
                 this.horizontalRadius, this.verticalRadius);
     }
 

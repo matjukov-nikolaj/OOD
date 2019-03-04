@@ -29,7 +29,7 @@ public class EllipseTest {
     }
 
     @Test
-    public void can_draw_ellipse() {
+    public void canDrawEllipse() {
         Point center  = new Point(0, 1);
         double horizontalRadius = 3;
         double verticalRadius = 1;
@@ -38,8 +38,8 @@ public class EllipseTest {
         ellipse.draw(canvas);
         String expectedResult = "===========================\r\n" +
                 "DRAW ELLIPSE: \r\n" +
-                "  LEFT   : " + (center.x - horizontalRadius) + "\r\n" +
-                "  TOP    : " + (center.y - verticalRadius) + "\r\n" +
+                "  LEFT   : " + (center.getX() - horizontalRadius) + "\r\n" +
+                "  TOP    : " + (center.getY() - verticalRadius) + "\r\n" +
                 "  WIDTH  : " + horizontalRadius + "\r\n" +
                 "  HEIGHT : " + verticalRadius + "\r\n" +
                 "  COLOR  : " + Color.RED.toString() + "\r\n" +

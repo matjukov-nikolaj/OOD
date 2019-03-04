@@ -19,8 +19,8 @@ public class Rectangle extends Shape {
     public void draw(Canvas canvas) {
         canvas.setColor(this.getColor());
 
-        Point rightTop = new Point(this.rightBottom.x, this.leftTop.y);
-        Point leftBottom = new Point(this.leftTop.x, this.rightBottom.y);
+        Point rightTop = new Point(this.rightBottom.getX(), this.leftTop.getY());
+        Point leftBottom = new Point(this.leftTop.getX(), this.rightBottom.getY());
 
         canvas.drawLine(this.leftTop, rightTop);
         canvas.drawLine(rightTop, this.rightBottom);

@@ -29,7 +29,7 @@ public class TriangleTest {
     }
 
     @Test
-    public void can_draw_triangle() {
+    public void canDrawTriangle() {
         Point vertex1 = new Point(0, 0);
         Point vertex2 = new Point(1,1);
         Point vertex3 = new Point(1, 0);
@@ -38,20 +38,20 @@ public class TriangleTest {
         triangle.draw(canvas);
         String expectedResult = "===========================\r\n" +
                 "DRAW LINE: \r\n" +
-                "  FROM : (" + vertex1.x + ", " + vertex1.y + ")\r\n" +
-                "  TO   : (" + vertex2.x + ", " + vertex2.y + ")\r\n" +
+                "  FROM : (" + vertex1.getX() + ", " + vertex1.getY() + ")\r\n" +
+                "  TO   : (" + vertex2.getX() + ", " + vertex2.getY() + ")\r\n" +
                 "  COLOR: " + Color.RED.toString() + "\r\n" +
                 "===========================\r\n" +
                 "===========================\r\n" +
                 "DRAW LINE: \r\n" +
-                "  FROM : (" + vertex2.x + ", " + vertex2.y + ")\r\n" +
-                "  TO   : (" + vertex3.x + ", " + vertex3.y + ")\r\n" +
+                "  FROM : (" + vertex2.getX() + ", " + vertex2.getY() + ")\r\n" +
+                "  TO   : (" + vertex3.getX() + ", " + vertex3.getY() + ")\r\n" +
                 "  COLOR: " + Color.RED.toString() + "\r\n" +
                 "===========================\r\n" +
                 "===========================\r\n" +
                 "DRAW LINE: \r\n" +
-                "  FROM : (" + vertex3.x + ", " + vertex3.y + ")\r\n" +
-                "  TO   : (" + vertex1.x + ", " + vertex1.y + ")\r\n" +
+                "  FROM : (" + vertex3.getX() + ", " + vertex3.getY() + ")\r\n" +
+                "  TO   : (" + vertex1.getX() + ", " + vertex1.getY() + ")\r\n" +
                 "  COLOR: " + Color.RED.toString() + "\r\n" +
                 "===========================\r\n";
         Assert.assertEquals(expectedResult, this.output.toString());

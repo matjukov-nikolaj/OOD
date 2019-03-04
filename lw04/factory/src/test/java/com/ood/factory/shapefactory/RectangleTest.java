@@ -29,36 +29,36 @@ public class RectangleTest {
     }
 
     @Test
-    public void can_draw_rectangle() {
+    public void canDrawRectangle() {
         Point leftTop = new Point(0, 1);
         Point rightBottom = new Point(1,0);
         Rectangle rectangle = new Rectangle(leftTop, rightBottom, Color.RED);
         Canvas canvas = new CanvasImpl();
         rectangle.draw(canvas);
-        Point rightTop = new Point(rightBottom.x, leftTop.y);
-        Point leftBottom = new Point(leftTop.x, rightBottom.y);
+        Point rightTop = new Point(rightBottom.getX(), leftTop.getY());
+        Point leftBottom = new Point(leftTop.getX(), rightBottom.getY());
         String expectedResult = "===========================\r\n" +
                 "DRAW LINE: \r\n" +
-                "  FROM : (" + leftTop.x + ", " + leftTop.y + ")\r\n" +
-                "  TO   : (" + rightTop.x + ", " + rightTop.y + ")\r\n" +
+                "  FROM : (" + leftTop.getX() + ", " + leftTop.getY() + ")\r\n" +
+                "  TO   : (" + rightTop.getX() + ", " + rightTop.getY() + ")\r\n" +
                 "  COLOR: " + Color.RED.toString() + "\r\n" +
                 "===========================\r\n" +
                 "===========================\r\n" +
                 "DRAW LINE: \r\n" +
-                "  FROM : (" + rightTop.x + ", " + rightTop.y + ")\r\n" +
-                "  TO   : (" + rightBottom.x + ", " + rightBottom.y + ")\r\n" +
+                "  FROM : (" + rightTop.getX() + ", " + rightTop.getY() + ")\r\n" +
+                "  TO   : (" + rightBottom.getX() + ", " + rightBottom.getY() + ")\r\n" +
                 "  COLOR: " + Color.RED.toString() + "\r\n" +
                 "===========================\r\n" +
                 "===========================\r\n" +
                 "DRAW LINE: \r\n" +
-                "  FROM : (" + rightBottom.x + ", " + rightBottom.y + ")\r\n" +
-                "  TO   : (" + leftBottom.x + ", " + leftBottom.y + ")\r\n" +
+                "  FROM : (" + rightBottom.getX() + ", " + rightBottom.getY() + ")\r\n" +
+                "  TO   : (" + leftBottom.getX() + ", " + leftBottom.getY() + ")\r\n" +
                 "  COLOR: " + Color.RED.toString() + "\r\n" +
                 "===========================\r\n"+
                 "===========================\r\n" +
                 "DRAW LINE: \r\n" +
-                "  FROM : (" + leftBottom.x + ", " + leftBottom.y + ")\r\n" +
-                "  TO   : (" + leftTop.x + ", " + leftTop.y + ")\r\n" +
+                "  FROM : (" + leftBottom.getX() + ", " + leftBottom.getY() + ")\r\n" +
+                "  TO   : (" + leftTop.getX() + ", " + leftTop.getY() + ")\r\n" +
                 "  COLOR: " + Color.RED.toString() + "\r\n" +
                 "===========================\r\n";
         Assert.assertEquals(expectedResult, this.output.toString());

@@ -32,7 +32,7 @@ public class RegularPolygonTest {
     }
 
     @Test
-    public void can_draw_ellipse() {
+    public void canDrawEllipse() {
         Point center  = new Point(0, 0);
         double radius = 3;
         int vertexCount = 6;
@@ -45,11 +45,11 @@ public class RegularPolygonTest {
 
             double angles = 2 * Math.PI / vertexCount;
 
-            Point prevPoint = new Point(center.x + radius * Math.cos(0), center.y);
+            Point prevPoint = new Point(center.getX() + radius * Math.cos(0), center.getY());
             points.add(prevPoint);
             for (int i = 1; i <= vertexCount; ++i) {
                 Point tempPoint = new Point(radius * Math.cos(angles * i), radius * Math.sin(angles * i));
-                Point point = new Point(center.x + tempPoint.x, center.y + tempPoint.y );
+                Point point = new Point(center.getX() + tempPoint.getX(), center.getY() + tempPoint.getY() );
                 points.add(point);
                 prevPoint = point;
             }
@@ -60,8 +60,8 @@ public class RegularPolygonTest {
                 Point point2 = points.get(i + 1);
                 expectedResult += "===========================\r\n" +
                         "DRAW LINE: \r\n" +
-                        "  FROM : (" + point1.x + ", " + point1.y + ")\r\n" +
-                        "  TO   : (" + point2.x + ", " + point2.y + ")\r\n" +
+                        "  FROM : (" + point1.getX() + ", " + point1.getY() + ")\r\n" +
+                        "  TO   : (" + point2.getX() + ", " + point2.getY() + ")\r\n" +
                         "  COLOR: " + Color.RED.toString() + "\r\n" +
                         "===========================\r\n";
             }
