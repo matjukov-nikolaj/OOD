@@ -1,5 +1,6 @@
 package com.ood.factory.shapefactory;
 
+import com.ood.exceptions.IncorrectNumberOfArguments;
 import com.ood.exceptions.UnknownColorException;
 import com.ood.exceptions.UnknownShapeException;
 import com.ood.factory.shape.*;
@@ -84,6 +85,18 @@ public class ShapeFactoryImplTest {
             fail();
         } catch (Exception e) {
             assertEquals(UnknownColorException.class, e.getClass());
+        }
+    }
+
+
+    @Test
+    public void throw_incorrect_number_of_arguments_exception_when_trying_to_enter_an_incorrect_number_of_arguments() {
+        ShapeFactory shapeFactory = new ShapeFactoryImpl();
+        try {
+            Shape shape = shapeFactory.createShape("rectangle 0 0 6 3 red error");
+            fail();
+        } catch (Exception e) {
+            assertEquals(IncorrectNumberOfArguments.class, e.getClass());
         }
     }
 
