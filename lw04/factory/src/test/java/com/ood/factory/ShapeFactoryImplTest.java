@@ -1,5 +1,6 @@
 package com.ood.factory;
 
+import com.ood.exceptions.UnknownColorException;
 import com.ood.exceptions.UnknownShapeException;
 import org.junit.Test;
 
@@ -13,7 +14,7 @@ public class ShapeFactoryImplTest {
         try {
             Shape shape = shapeFactory.createShape("rectangle 0 1 1 0 red");
             assertEquals(Rectangle.class, shape.getClass());
-        } catch (UnknownShapeException e) {
+        } catch (Exception e) {
             fail();
         }
     }
@@ -24,7 +25,7 @@ public class ShapeFactoryImplTest {
         try {
             Shape shape = shapeFactory.createShape("triangle 0 0 1 1 1 0 green");
             assertEquals(Triangle.class, shape.getClass());
-        } catch (UnknownShapeException e) {
+        } catch (Exception e) {
             fail();
         }
     }
@@ -35,7 +36,7 @@ public class ShapeFactoryImplTest {
         try {
             Shape shape = shapeFactory.createShape("ellipse 0 0 6 3 black");
             assertEquals(Ellipse.class, shape.getClass());
-        } catch (UnknownShapeException e) {
+        } catch (Exception e) {
             fail();
         }
     }
@@ -46,7 +47,7 @@ public class ShapeFactoryImplTest {
         try {
             Shape shape = shapeFactory.createShape("polygon 0 0 6 3 red");
             assertEquals(RegularPolygon.class, shape.getClass());
-        } catch (UnknownShapeException e) {
+        } catch (Exception e) {
             fail();
         }
     }
@@ -58,7 +59,7 @@ public class ShapeFactoryImplTest {
             Shape shape = shapeFactory.createShape("error 0 0 6 3 red");
             fail();
         } catch (Exception e) {
-            assertEquals("Unknown shape.", e.getMessage());
+            assertEquals("Unknown Shape.", e.getMessage());
             assertEquals(UnknownShapeException.class, e.getClass());
         }
     }
@@ -71,6 +72,17 @@ public class ShapeFactoryImplTest {
             fail();
         } catch (Exception e) {
             assertEquals(NumberFormatException.class, e.getClass());
+        }
+    }
+
+    @Test
+    public void throw_null_pointer_exception_when_user_entered_incorrect_color() {
+        ShapeFactory shapeFactory = new ShapeFactoryImpl();
+        try {
+            Shape shape = shapeFactory.createShape("rectangle 0 0 6 3 error");
+            fail();
+        } catch (Exception e) {
+            assertEquals(UnknownColorException.class, e.getClass());
         }
     }
 
