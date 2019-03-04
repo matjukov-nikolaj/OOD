@@ -1,4 +1,4 @@
-package com.ood.factory;
+package com.ood.factory.shape;
 
 public class Point {
 

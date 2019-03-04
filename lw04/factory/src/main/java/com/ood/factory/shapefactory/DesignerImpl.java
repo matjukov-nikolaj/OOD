@@ -1,4 +1,4 @@
-package com.ood.factory;
+package com.ood.factory.shapefactory;
 
 import com.ood.exceptions.UnknownColorException;
 import com.ood.exceptions.UnknownShapeException;
@@ -29,7 +29,7 @@ public class DesignerImpl implements Designer {
             }
             try {
                 pictureDraft.addShape(this.factory.createShape(inputStr));
-            } catch (UnknownShapeException | WrongAmountException | UnknownColorException e) {
+            } catch (UnknownShapeException | WrongAmountException | UnknownColorException | NumberFormatException e ) {
                 this.printUsage();
             } catch (Exception e) {
                 System.out.println(e.getMessage());

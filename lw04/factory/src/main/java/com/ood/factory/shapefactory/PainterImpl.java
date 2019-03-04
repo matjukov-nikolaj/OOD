@@ -1,5 +1,8 @@
-package com.ood.factory;
+package com.ood.factory.shapefactory;
 
+
+import com.ood.factory.canvas.Canvas;
+import com.ood.factory.shape.Shape;
 
 public class PainterImpl implements Painter {
 

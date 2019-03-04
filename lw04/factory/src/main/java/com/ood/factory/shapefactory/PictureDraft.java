@@ -1,4 +1,6 @@
-package com.ood.factory;
+package com.ood.factory.shapefactory;
+
+import com.ood.factory.shape.Shape;
 
 import java.util.ArrayList;
 import java.util.List;

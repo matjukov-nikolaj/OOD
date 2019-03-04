@@ -1,6 +1,10 @@
-package com.ood.factory;
+package com.ood.factory.shapefactory;
 
+import com.ood.factory.canvas.Canvas;
+import com.ood.factory.canvas.CanvasImpl;
 import com.ood.exceptions.WrongAmountException;
+import com.ood.factory.shape.Point;
+import com.ood.factory.shape.RegularPolygon;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;

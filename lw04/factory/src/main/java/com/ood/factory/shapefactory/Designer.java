@@ -1,4 +1,4 @@
-package com.ood.factory;
+package com.ood.factory.shapefactory;
 
 import java.io.InputStream;
 

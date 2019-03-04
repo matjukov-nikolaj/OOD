@@ -1,5 +1,9 @@
-package com.ood.factory;
+package com.ood.factory.shapefactory;
 
+import com.ood.factory.canvas.Canvas;
+import com.ood.factory.canvas.CanvasImpl;
+import com.ood.factory.shape.Point;
+import com.ood.factory.shape.Triangle;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -7,8 +11,6 @@ import org.junit.Test;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
-
-import static org.junit.Assert.*;
 
 public class TriangleTest {
 

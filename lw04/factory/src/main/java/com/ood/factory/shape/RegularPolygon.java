@@ -1,6 +1,8 @@
-package com.ood.factory;
+package com.ood.factory.shape;
 
+import com.ood.factory.canvas.Canvas;
 import com.ood.exceptions.WrongAmountException;
+import com.ood.factory.shapefactory.Color;
 
 public class RegularPolygon extends Shape{
 

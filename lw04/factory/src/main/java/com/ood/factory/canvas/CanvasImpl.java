@@ -1,4 +1,7 @@
-package com.ood.factory;
+package com.ood.factory.canvas;
+
+import com.ood.factory.shapefactory.Color;
+import com.ood.factory.shape.Point;
 
 public class CanvasImpl implements Canvas {
 

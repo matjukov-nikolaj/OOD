@@ -1,4 +1,7 @@
-package com.ood.factory;
+package com.ood.factory.shape;
+
+import com.ood.factory.canvas.Canvas;
+import com.ood.factory.shapefactory.Color;
 
 public abstract class Shape {
 
