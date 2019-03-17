@@ -116,12 +116,12 @@ public class Commander {
 
     private Function setTitle() {
         return (List<String> args) -> {
-            if (args.size() != 2) {
+            if (args.size() < 2) {
                 this.showErrorForCommand(SET_TITLE);
                 return;
             }
             try {
-                this.document.setTitle(args.get(1));
+                this.document.setTitle(String.join(" ", args.subList(1, args.size())));
             } catch (Exception e) {
                 System.out.println(e.getClass() + ": "+ e.getMessage());
             }
@@ -137,7 +137,7 @@ public class Commander {
 
             try {
                 System.out.println("---------------------Elements---------------------");
-                System.out.println("Title: " + (this.document.getTitle() == null ? "\"\"" : this.document.getTitle()));
+                System.out.println("Title: " + this.document.getTitle().getText());
 
                 for (int i = 0; i < this.document.getItemsCount(); ++i) {
                     System.out.print(i + ". ");
@@ -160,7 +160,7 @@ public class Commander {
 
     private Function replaceText() {
         return (List<String> args) -> {
-            if (args.size() != 3) {
+            if (args.size() < 3) {
                 this.showErrorForCommand(REPLACE_TEXT);
                 return;
             }

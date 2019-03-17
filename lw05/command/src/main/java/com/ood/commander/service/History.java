@@ -11,12 +11,9 @@ public class History {
 
     private List<Command> commands;
 
-    private int undoCounter;
-
     public History() {
         this.nextCommandIndex = 0;
         this.commands = new ArrayList<>();
-        this.undoCounter = 0;
     }
 
     public boolean canUndo() {

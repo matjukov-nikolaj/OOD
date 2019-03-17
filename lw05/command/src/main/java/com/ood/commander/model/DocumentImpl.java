@@ -16,7 +16,7 @@ import java.util.UUID;
 
 public class DocumentImpl implements Document {
 
-    private String title;
+    private Text title;
 
     private History history = new History();
 
@@ -24,13 +24,13 @@ public class DocumentImpl implements Document {
 
     @Override
     public void setTitle(String title) throws Exception {
-        this.title = title;
-        this.history.addAndExecuteCommand(new ChangeStringCommand(this.title, title));
+        this.title = new TextImpl(title);
+        this.history.addAndExecuteCommand(new ChangeStringCommand("", title, this.title));
     }
 
     @Override
-    public String getTitle() {
-        return title;
+    public Text getTitle() {
+        return title == null ? new TextImpl("") : title;
     }
 
     @Override

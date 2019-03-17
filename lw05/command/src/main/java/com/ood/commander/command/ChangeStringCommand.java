@@ -1,6 +1,6 @@
 package com.ood.commander.command;
 
-import com.ood.Utilities;
+import com.ood.commander.model.Text;
 
 public class ChangeStringCommand extends AbstractCommand {
 
@@ -8,22 +8,22 @@ public class ChangeStringCommand extends AbstractCommand {
 
     private String target;
 
-    public ChangeStringCommand(String target, String newValue) {
+    private Text text;
+
+    public ChangeStringCommand(String target, String newValue, Text text) {
         this.target = target;
         this.newValue = newValue;
+        this.text = text;
     }
 
     @Override
     protected void doExecute() {
-        this.newValue = this.newValue + this.target;
-        this.target = this.newValue.substring(0, (this.newValue.length() - this.target.length()));
-        this.newValue = this.newValue.substring(this.target.length());
+        this.text.setText(this.newValue);
     }
 
     @Override
     protected void doUnExecute() {
-        this.newValue = this.newValue + this.target;
-        this.target = this.newValue.substring(0, (this.newValue.length() - this.target.length()));
-        this.newValue = this.newValue.substring(this.target.length());
+        this.text.setText(this.target);
     }
+
 }

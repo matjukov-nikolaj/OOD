@@ -1,9 +1,9 @@
 package com.ood.commander.model;
 
-public interface Paragraph {
+public interface Paragraph extends Text{
 
-    String getText();
+    String getParagraphText();
 
-    void setText(String text) throws Exception;
+    void setParagraphText(String text) throws Exception;
 
 }

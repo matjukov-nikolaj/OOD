@@ -15,13 +15,22 @@ public class ParagraphImpl implements Paragraph {
     }
 
     @Override
-    public String getText() {
-        return text;
+    public void setText(String text) {
+        this.text = text;
     }
 
     @Override
-    public void setText(String text) throws Exception {
-        this.history.addAndExecuteCommand(new ChangeStringCommand(this.text, text));
-        this.text = text;
+    public String getText() {
+        return this.text;
+    }
+
+    @Override
+    public String getParagraphText() {
+        return this.text;
+    }
+
+    @Override
+    public void setParagraphText(String text) throws Exception {
+        this.history.addAndExecuteCommand(new ChangeStringCommand(this.text, text, this));
     }
 }

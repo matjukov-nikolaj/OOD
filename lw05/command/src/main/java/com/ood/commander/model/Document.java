@@ -12,7 +12,7 @@ public interface Document {
 
     void deleteItem(int index) throws Exception;
 
-    String getTitle();
+    Text getTitle();
 
     void setTitle(String title) throws Exception;
 
