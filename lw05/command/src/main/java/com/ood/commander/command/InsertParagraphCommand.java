@@ -24,6 +24,11 @@ public class InsertParagraphCommand extends AbstractCommand {
     }
 
     @Override
+    public void remove() {
+
+    }
+
+    @Override
     protected void doExecute() {
         if (this.position == -1 ) {
             this.items.add(new DocumentItem(this.paragraph));

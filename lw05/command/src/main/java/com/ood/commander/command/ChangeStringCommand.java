@@ -17,6 +17,11 @@ public class ChangeStringCommand extends AbstractCommand {
     }
 
     @Override
+    public void remove() {
+
+    }
+
+    @Override
     protected void doExecute() {
         this.text.setText(this.newValue);
     }

@@ -1,18 +1,17 @@
 package com.ood.commander.model;
 
-import com.ood.Utilities;
 import com.ood.commander.command.DeleteItemCommand;
 import com.ood.commander.service.History;
 import com.ood.commander.command.ChangeStringCommand;
 import com.ood.commander.command.InsertImageCommand;
 import com.ood.commander.command.InsertParagraphCommand;
+import com.ood.commander.service.ImageController;
 import com.ood.exception.WrongPositionException;
-import org.apache.commons.io.FilenameUtils;
 
 import java.io.File;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 public class DocumentImpl implements Document {
 
@@ -21,6 +20,10 @@ public class DocumentImpl implements Document {
     private History history = new History();
 
     private List<DocumentItem> documentItems = new ArrayList<>();
+
+    private ImageController imageController = new ImageController();
+
+    private static final String INDEX_HTML = "\\index.html";
 
     @Override
     public void setTitle(String title) throws Exception {
@@ -68,25 +71,39 @@ public class DocumentImpl implements Document {
         if (position < 0) {
             throw new WrongPositionException(position);
         }
-        File file = new File(path);
-        if (!file.exists() || file.isDirectory()) {
-            throw new IllegalArgumentException("Incorrect file path.");
-        }
-        String fileExtension = FilenameUtils.getExtension(path);
-        String uniqueFileName = UUID.randomUUID().toString();
-        String currentDir = System.getProperty("user.dir");
-        String newFilePath = currentDir + "\\result\\image\\" + uniqueFileName + "." + fileExtension;
-        File newFile = new File(newFilePath);
-        Utilities.copyFileUsingChannel(file, newFile);
-
+        String newFilePath = this.imageController.add(path);
         Image image = new ImageImpl(newFilePath, width, height, this.history);
-        this.history.addAndExecuteCommand(new InsertImageCommand(this.documentItems, image, position));
+        this.history.addAndExecuteCommand(new InsertImageCommand(this.documentItems, image, position, this.imageController));
         return image;
     }
 
     @Override
     public void save(String path) {
-
+        String directory = path + INDEX_HTML;
+        File file = new File(directory);
+        if (file.exists()) {
+            if (file.delete()) {
+                System.out.println("Delete the file: " + directory);
+            }
+        }
+        try (PrintWriter writer = new PrintWriter(directory, "UTF-8");) {
+            if (file.createNewFile()) {
+                System.out.println("Create the file: " + directory);
+            }
+            writer.println( "<!DOCTYPE html><html><head><title>" + this.escapeHtmlCharacters(this.getTitle().getText()) + "</title></head><body>" );
+            for (DocumentItem item : this.documentItems) {
+                Paragraph paragraph = item.getParagraph();
+                Image image = item.getImage();
+                if (paragraph != null) {
+                    writer.println("<p>" + this.escapeHtmlCharacters(paragraph.getParagraphText()) + "</p>");
+                } else if (image != null) {
+                    writer.println("<img src=\"" + this.escapeHtmlCharacters(image.getPath()) + "\" width=\"" + image.getWidth() + "\" height=\"" + image.getHeight() + "\"/>");
+                }
+            }
+            writer.println("</body></html>");
+        } catch (Exception e) {
+            System.out.println(e.getClass() + ": " + e.getMessage());
+        }
     }
 
     @Override
@@ -94,7 +111,7 @@ public class DocumentImpl implements Document {
         if (index >= this.documentItems.size()) {
             throw new IndexOutOfBoundsException();
         }
-        this.history.addAndExecuteCommand(new DeleteItemCommand(index, this.documentItems));
+        this.history.addAndExecuteCommand(new DeleteItemCommand(index, this.documentItems, this.imageController));
     }
 
     @Override
@@ -105,6 +122,16 @@ public class DocumentImpl implements Document {
     @Override
     public int getItemsCount() {
         return this.documentItems.size();
+    }
+
+    private String escapeHtmlCharacters(String text)
+    {
+        text = text.replaceAll("&", "&amp;");
+        text = text.replaceAll("/'", "&apos;");
+        text = text.replaceAll("\"", "&quot;");
+        text = text.replaceAll(">", "&gt;");
+        text = text.replaceAll("<", "&lt;");
+        return text;
     }
 
 }

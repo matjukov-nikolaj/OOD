@@ -23,6 +23,11 @@ public class ResizeImageCommand extends AbstractCommand {
     }
 
     @Override
+    public void remove() {
+
+    }
+
+    @Override
     protected void doExecute() {
         this.image.setWidth(this.newWidth);
         this.image.setHeight(this.newHeight);
