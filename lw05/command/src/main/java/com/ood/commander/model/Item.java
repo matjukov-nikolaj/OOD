@@ -1,5 +1,7 @@
 package com.ood.commander.model;
 
+import java.util.List;
+
 public class Item {
 
     private String shortcut;
@@ -22,7 +24,7 @@ public class Item {
         return shortcut;
     }
 
-    public void action(String[] args) {
+    public void action(List<String> args) {
         this.func.action(args);
     }
 

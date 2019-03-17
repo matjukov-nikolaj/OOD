@@ -74,7 +74,8 @@ public class DocumentImpl implements Document {
         }
         String fileExtension = FilenameUtils.getExtension(path);
         String uniqueFileName = UUID.randomUUID().toString();
-        String newFilePath = Constants.PATH_TO_IMAGE_FOLDER + uniqueFileName + "." + fileExtension;
+        String currentDir = System.getProperty("user.dir");
+        String newFilePath = currentDir + "\\result\\image\\" + uniqueFileName + "." + fileExtension;
         File newFile = new File(newFilePath);
         Utilities.copyFileUsingChannel(file, newFile);
 

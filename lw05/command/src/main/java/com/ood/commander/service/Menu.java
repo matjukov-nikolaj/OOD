@@ -4,6 +4,7 @@ import com.ood.commander.model.Function;
 import com.ood.commander.model.Item;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
@@ -55,7 +56,7 @@ public class Menu {
         Item item = this.findCommandByName(name);
 
         if (item != null) {
-            item.action(commandList);
+            item.action(Arrays.asList(commandList));
         } else {
             System.out.println("Unknown command.");
         }

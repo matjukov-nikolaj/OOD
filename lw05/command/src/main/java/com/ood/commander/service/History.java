@@ -46,9 +46,7 @@ public class History {
             this.commands.remove(0);
             --this.nextCommandIndex;
         }
-        for (int i = this.nextCommandIndex; i < this.commands.size(); ++i) {
-            this.commands.remove(i);
-        }
+        this.commands = this.commands.subList(0, this.nextCommandIndex);
         if (this.nextCommandIndex < this.commands.size()) {
             command.execute();
             ++this.nextCommandIndex;

@@ -4,7 +4,7 @@ import com.ood.commander.model.*;
 import com.ood.commander.service.Menu;
 import com.ood.exception.WrongPositionException;
 
-import com.ood.commander.model.Constants;
+import java.util.List;
 
 public class Commander {
 
@@ -12,22 +12,50 @@ public class Commander {
 
     private Document document;
 
+    private static final String INSERT_PARAGRAPH = "ip";
+
+    private static final String INSERT_IMAGE = "ii";
+
+    private static final String SET_TITLE = "st";
+
+    private static final String LIST = "List";
+
+    private static final String REPLACE_TEXT = "rt";
+
+    private static final String RESIZE_IMAGE = "ri";
+
+    private static final String DELETE_ITEM = "di";
+
+    private static final String HELP = "Help";
+
+    private static final String UNDO = "Undo";
+
+    private static final String REDO = "Redo";
+
+    private static final String SAVE = "Save";
+
+    private static final String EXIT = "Exit";
+
+    private static final String WITHOUT_PARAMETERS = "Without parameters.";
+
+    private static final String END_POSITION = "end";
+
     public Commander() {
         this.menu = new Menu();
         this.document = new DocumentImpl();
 
-        this.menu.addItem(Constants.INSERT_PARAGRAPH, Constants.INSERT_PARAGRAPH + " <position> <text>. Position can be \"end\"", this.insertParagraph());
-        this.menu.addItem(Constants.INSERT_IMAGE, Constants.INSERT_IMAGE + " <position> <width> <height> <file path>. Position can be \"end\"", this.insertImage());
-        this.menu.addItem(Constants.SET_TITLE, Constants.SET_TITLE + " <title>", this.setTitle());
-        this.menu.addItem(Constants.LIST, Constants.LIST + ". " + Constants.WITHOUT_PARAMETERS, this.showDocument());
-        this.menu.addItem(Constants.REPLACE_TEXT, Constants.REPLACE_TEXT + " <position> <text>", this.replaceText());
-        this.menu.addItem(Constants.RESIZE_IMAGE, Constants.RESIZE_IMAGE + " <position> <width> <height>", this.resizeImage());
-        this.menu.addItem(Constants.DELETE_ITEM, Constants.DELETE_ITEM + " <position>", this.deleteItem());
-        this.menu.addItem(Constants.HELP, Constants.HELP + ". " + Constants.WITHOUT_PARAMETERS, this.showHelpBlock());
-        this.menu.addItem(Constants.UNDO, Constants.UNDO + ". " + Constants.WITHOUT_PARAMETERS, this.undo());
-        this.menu.addItem(Constants.REDO, Constants.REDO + ". " + Constants.WITHOUT_PARAMETERS , this.redo());
-        this.menu.addItem(Constants.SAVE, Constants.SAVE + " <path to save>", this.save());
-        this.menu.addItem(Constants.EXIT, Constants.EXIT + ". " + Constants.WITHOUT_PARAMETERS, this.exit());
+        this.menu.addItem(INSERT_PARAGRAPH, INSERT_PARAGRAPH + " <position> <text>. Position can be \"end\"", this.insertParagraph());
+        this.menu.addItem(INSERT_IMAGE, INSERT_IMAGE + " <position> <width> <height> <file path>. Position can be \"end\"", this.insertImage());
+        this.menu.addItem(SET_TITLE, SET_TITLE + " <title>", this.setTitle());
+        this.menu.addItem(LIST, LIST + ". " + WITHOUT_PARAMETERS, this.showDocument());
+        this.menu.addItem(REPLACE_TEXT, REPLACE_TEXT + " <position> <text>", this.replaceText());
+        this.menu.addItem(RESIZE_IMAGE, RESIZE_IMAGE + " <position> <width> <height>", this.resizeImage());
+        this.menu.addItem(DELETE_ITEM, DELETE_ITEM + " <position>", this.deleteItem());
+        this.menu.addItem(HELP, HELP + ". " + WITHOUT_PARAMETERS, this.showHelpBlock());
+        this.menu.addItem(UNDO, UNDO + ". " + WITHOUT_PARAMETERS, this.undo());
+        this.menu.addItem(REDO, REDO + ". " + WITHOUT_PARAMETERS , this.redo());
+        this.menu.addItem(SAVE, SAVE + " <path to save>", this.save());
+        this.menu.addItem(EXIT, EXIT + ". " + WITHOUT_PARAMETERS, this.exit());
     }
 
     public void start() {
@@ -35,7 +63,7 @@ public class Commander {
     }
 
     private int getPosition(String pos) throws WrongPositionException {
-        if (pos.equalsIgnoreCase(Constants.END_POSITION)) {
+        if (pos.equalsIgnoreCase(END_POSITION)) {
             return -1;
         }
         Integer value = Integer.parseInt(pos);
@@ -51,15 +79,16 @@ public class Commander {
     }
 
     private Function insertParagraph() {
-        return (String[] args) -> {
-            if (args.length != 3) {
-                this.showErrorForCommand(Constants.INSERT_PARAGRAPH);
+        return (List<String> args) -> {
+            if (args.size() < 3) {
+                this.showErrorForCommand(INSERT_PARAGRAPH);
                 return;
             }
 
             try {
-                int position = this.getPosition(args[1]);
-                String text = args[2];
+                int position = this.getPosition(args.get(1));
+                String text = String.join(" ", args.subList(2, args.size()));
+
                 this.document.insertParagraph(text, position);
             } catch (Exception e) {
                 System.out.println(e.getClass() + ": "+ e.getMessage());
@@ -68,17 +97,17 @@ public class Commander {
     }
 
     private Function insertImage() {
-        return (String[] args) -> {
-            if (args.length != 5) {
-                this.showErrorForCommand(Constants.INSERT_IMAGE);
+        return (List<String> args) -> {
+            if (args.size() != 5) {
+                this.showErrorForCommand(INSERT_IMAGE);
                 return;
             }
 
             try {
-                int position = this.getPosition(args[1]);
-                int width = Integer.parseInt(args[2]);
-                int height = Integer.parseInt(args[3]);
-                this.document.insertImage(args[4], width, height, position);
+                int position = this.getPosition(args.get(1));
+                int width = Integer.parseInt(args.get(2));
+                int height = Integer.parseInt(args.get(3));
+                this.document.insertImage(args.get(4), width, height, position);
             } catch (Exception e) {
                 System.out.println(e.getClass() + ": "+ e.getMessage());
             }
@@ -86,13 +115,13 @@ public class Commander {
     }
 
     private Function setTitle() {
-        return (String[] args) -> {
-            if (args.length != 2) {
-                this.showErrorForCommand(Constants.SET_TITLE);
+        return (List<String> args) -> {
+            if (args.size() != 2) {
+                this.showErrorForCommand(SET_TITLE);
                 return;
             }
             try {
-                this.document.setTitle(args[1]);
+                this.document.setTitle(args.get(1));
             } catch (Exception e) {
                 System.out.println(e.getClass() + ": "+ e.getMessage());
             }
@@ -100,15 +129,15 @@ public class Commander {
     }
 
     private Function showDocument() {
-        return (String[] args) -> {
-            if (args.length != 1) {
-                this.showErrorForCommand(Constants.LIST);
+        return (List<String> args) -> {
+            if (args.size() != 1) {
+                this.showErrorForCommand(LIST);
                 return;
             }
 
             try {
                 System.out.println("---------------------Elements---------------------");
-                System.out.println("Title: " + this.document.getTitle());
+                System.out.println("Title: " + (this.document.getTitle() == null ? "\"\"" : this.document.getTitle()));
 
                 for (int i = 0; i < this.document.getItemsCount(); ++i) {
                     System.out.print(i + ". ");
@@ -130,17 +159,18 @@ public class Commander {
     }
 
     private Function replaceText() {
-        return (String[] args) -> {
-            if (args.length != 3) {
-                this.showErrorForCommand(Constants.REPLACE_TEXT);
+        return (List<String> args) -> {
+            if (args.size() != 3) {
+                this.showErrorForCommand(REPLACE_TEXT);
                 return;
             }
             try {
-                int position = this.getPosition(args[1]);
+                int position = this.getPosition(args.get(1));
                 DocumentItem item = this.document.getDocumentItem(position);
                 Paragraph paragraph = item.getParagraph();
                 if (paragraph != null) {
-                    paragraph.setText(args[2]);
+                    String text = String.join(" ", args.subList(2, args.size()));
+                    paragraph.setText(text);
                 } else {
                     throw new IllegalArgumentException("Element with position number = " + position + ". Is not a paragraph");
                 }
@@ -151,15 +181,15 @@ public class Commander {
     }
 
     private Function resizeImage() {
-        return (String[] args) -> {
-            if (args.length != 4) {
-                this.showErrorForCommand(Constants.RESIZE_IMAGE);
+        return (List<String> args) -> {
+            if (args.size() != 4) {
+                this.showErrorForCommand(RESIZE_IMAGE);
                 return;
             }
             try {
-                int position = this.getPosition(args[1]);
-                int width = Integer.parseInt(args[2]);
-                int height = Integer.parseInt(args[3]);
+                int position = this.getPosition(args.get(1));
+                int width = Integer.parseInt(args.get(2));
+                int height = Integer.parseInt(args.get(3));
                 DocumentItem item = this.document.getDocumentItem(position);
                 Image image = item.getImage();
                 if (image != null) {
@@ -175,13 +205,13 @@ public class Commander {
     }
 
     private Function deleteItem() {
-        return (String[] args) -> {
-            if (args.length != 2) {
-                this.showErrorForCommand(Constants.DELETE_ITEM);
+        return (List<String> args) -> {
+            if (args.size() != 2) {
+                this.showErrorForCommand(DELETE_ITEM);
                 return;
             }
             try {
-                int position = this.getPosition(args[1]);
+                int position = this.getPosition(args.get(1));
                 this.document.deleteItem(position);
             } catch (Exception e) {
                 System.out.println(e.getClass() + ": "+ e.getMessage());
@@ -190,9 +220,9 @@ public class Commander {
     }
 
     private Function showHelpBlock() {
-        return (String[] args) -> {
-            if (args.length != 1) {
-                this.showErrorForCommand(Constants.HELP);
+        return (List<String> args) -> {
+            if (args.size() != 1) {
+                this.showErrorForCommand(HELP);
                 return;
             }
             try {
@@ -204,9 +234,9 @@ public class Commander {
     }
 
     private Function undo() {
-        return (String[] args) -> {
-            if (args.length != 1) {
-                this.showErrorForCommand(Constants.UNDO);
+        return (List<String> args) -> {
+            if (args.size() != 1) {
+                this.showErrorForCommand(UNDO);
                 return;
             }
             if (document.canUndo()) {
@@ -218,9 +248,9 @@ public class Commander {
     }
 
     private Function redo() {
-        return (String[] args) -> {
-            if (args.length != 1) {
-                this.showErrorForCommand(Constants.REDO);
+        return (List<String> args) -> {
+            if (args.size() != 1) {
+                this.showErrorForCommand(REDO);
                 return;
             }
             if (document.canRedo()) {
@@ -232,19 +262,19 @@ public class Commander {
     }
 
     private Function save() {
-        return (String[] args) -> {
-            if (args.length != 2) {
-                this.showErrorForCommand(Constants.SAVE);
+        return (List<String> args) -> {
+            if (args.size() != 2) {
+                this.showErrorForCommand(SAVE);
                 return;
             }
-            this.document.save(args[1]);
+            this.document.save(args.get(1));
         };
     }
 
     private Function exit() {
-        return (String[] args) -> {
-            if (args.length != 1) {
-                this.showErrorForCommand(Constants.EXIT);
+        return (List<String> args) -> {
+            if (args.size() != 1) {
+                this.showErrorForCommand(EXIT);
                 return;
             }
             this.menu.exit();
