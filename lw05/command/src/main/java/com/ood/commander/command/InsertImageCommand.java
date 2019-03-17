@@ -38,7 +38,7 @@ public class InsertImageCommand extends AbstractCommand {
         } else {
             this.items.add(position, new DocumentItem(this.image));
         }
-        this.imageController.handle(this.image.getPath());
+        this.imageController.markForDeletion(this.image.getPath(), false);
     }
 
     @Override
@@ -48,7 +48,7 @@ public class InsertImageCommand extends AbstractCommand {
         } else {
             this.items.remove(this.position);
         }
-        this.imageController.handle(this.image.getPath());
+        this.imageController.markForDeletion(this.image.getPath(), true);
     }
 
 

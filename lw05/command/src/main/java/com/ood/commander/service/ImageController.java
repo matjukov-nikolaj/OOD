@@ -15,14 +15,16 @@ public class ImageController {
 
     private String directory;
 
-    private Set<String> images;
+    private Set<String> imagesToRemove;
 
-    private static final String IMAGE_FOLDER = "\\images\\";
-
-    public ImageController() {
-        this.directory = System.getProperty("user.dir") + IMAGE_FOLDER;
+    public ImageController(String path) {
+        this.directory = path;
         this.checkDirectory();
-        this.images = new HashSet<>();
+        this.imagesToRemove = new HashSet<>();
+    }
+
+    public void setDirectory(String directory) {
+        this.directory = directory;
     }
 
     public String add(String path) {
@@ -36,13 +38,15 @@ public class ImageController {
         File newFile = new File(newFilePath);
         copyFileUsingChannel(file, newFile);
 
-        this.images.add(newFilePath);
         return newFilePath;
     }
 
     public void delete(String path) {
         File file = new File(path);
-        if (!file.exists() || file.isDirectory()) {
+        if (!file.exists()) {
+            return;
+        }
+        if (file.isDirectory()) {
             throw new IllegalArgumentException("Incorrect file path: " + path);
         }
         if (file.delete()) {
@@ -50,15 +54,27 @@ public class ImageController {
         } else {
             System.out.println("Deletion didn't happen: " + path);
         }
-        this.images.remove(path);
     }
 
-    public void handle(String path) {
-        if (this.images.contains(path)) {
-            this.images.remove(path);
+    public void markForDeletion(String path, boolean remove) {
+        if (remove) {
+            this.imagesToRemove.add(path);
         } else {
-            this.images.add(path);
+            if (this.imagesToRemove.contains(path)) {
+                this.imagesToRemove.remove(path);
+            }
         }
+    }
+
+    public void deleteUnusedImages() {
+        for (String path: this.imagesToRemove) {
+            this.delete(path);
+        }
+        this.imagesToRemove.clear();
+    }
+
+    public Set<String> getImagesToRemove() {
+        return this.imagesToRemove;
     }
 
     private void copyFileUsingChannel(File source, File dest) {

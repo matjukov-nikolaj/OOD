@@ -43,12 +43,14 @@ public class History {
             this.commands.remove(0);
             --this.nextCommandIndex;
         }
+
         List<Command> tempCommands = new ArrayList<>(this.commands);
         this.commands = this.commands.subList(0, this.nextCommandIndex);
         for (int i = this.nextCommandIndex; i < tempCommands.size(); ++i) {
             tempCommands.get(i).remove();
         }
         this.commands = this.commands.subList(0, this.nextCommandIndex);
+
         if (this.nextCommandIndex < this.commands.size()) {
             command.execute();
             ++this.nextCommandIndex;

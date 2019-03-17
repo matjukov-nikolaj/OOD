@@ -21,4 +21,5 @@ public class DocumentItem{
     public Image getImage() {
         return image;
     }
+
 }

@@ -21,9 +21,19 @@ public class DocumentImpl implements Document {
 
     private List<DocumentItem> documentItems = new ArrayList<>();
 
-    private ImageController imageController = new ImageController();
+    private ImageController imageController = new ImageController(System.getProperty("user.dir") + IMAGE_FOLDER);
 
     private static final String INDEX_HTML = "\\index.html";
+
+    private static final String IMAGE_FOLDER = "\\images\\";
+
+    public DocumentImpl() {
+
+    }
+
+    public DocumentImpl(String imageFolder) {
+        this.imageController.setDirectory(imageFolder);
+    }
 
     @Override
     public void setTitle(String title) throws Exception {
@@ -59,6 +69,9 @@ public class DocumentImpl implements Document {
     @Override
     public Paragraph insertParagraph(String text, int position) throws Exception {
         Paragraph paragraph = new ParagraphImpl(text, this.history);
+        if (position < -1) {
+            throw new WrongPositionException(position);
+        }
         if (position > this.documentItems.size()) {
             throw new IndexOutOfBoundsException();
         }
@@ -68,8 +81,11 @@ public class DocumentImpl implements Document {
 
     @Override
     public Image insertImage(String path, int width, int height, int position) throws Exception {
-        if (position < 0) {
+        if (position < -1) {
             throw new WrongPositionException(position);
+        }
+        if (position > this.documentItems.size()) {
+            throw new IndexOutOfBoundsException();
         }
         String newFilePath = this.imageController.add(path);
         Image image = new ImageImpl(newFilePath, width, height, this.history);
@@ -79,6 +95,7 @@ public class DocumentImpl implements Document {
 
     @Override
     public void save(String path) {
+        this.imageController.deleteUnusedImages();
         String directory = path + INDEX_HTML;
         File file = new File(directory);
         if (file.exists()) {
@@ -108,9 +125,6 @@ public class DocumentImpl implements Document {
 
     @Override
     public void deleteItem(int index) throws Exception {
-        if (index >= this.documentItems.size()) {
-            throw new IndexOutOfBoundsException();
-        }
         this.history.addAndExecuteCommand(new DeleteItemCommand(index, this.documentItems, this.imageController));
     }
 
@@ -127,7 +141,7 @@ public class DocumentImpl implements Document {
     private String escapeHtmlCharacters(String text)
     {
         text = text.replaceAll("&", "&amp;");
-        text = text.replaceAll("/'", "&apos;");
+        text = text.replaceAll("\'", "&apos;");
         text = text.replaceAll("\"", "&quot;");
         text = text.replaceAll(">", "&gt;");
         text = text.replaceAll("<", "&lt;");

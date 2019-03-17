@@ -38,30 +38,25 @@ public class DeleteItemCommand extends AbstractCommand {
     public void doExecute() {
         if (this.position == -1) {
             this.items.remove(this.items.size() - 1);
-            this.handleImage();
         } else {
             this.items.remove(this.position);
-            this.handleImage();
+        }
+        Image image = this.item.getImage();
+        if (image != null) {
+            this.imageController.markForDeletion(image.getPath(), true);
         }
     }
 
     public void doUnExecute() {
         if (this.position == -1) {
             this.items.add(this.item);
-            this.handleImage();
         } else {
             this.items.add(this.position, this.item);
-            this.handleImage();
         }
-    }
-
-    private void handleImage() {
         Image image = this.item.getImage();
         if (image != null) {
-            this.imageController.handle(image.getPath());
+            this.imageController.markForDeletion(image.getPath(), false);
         }
     }
-
-
 
 }
