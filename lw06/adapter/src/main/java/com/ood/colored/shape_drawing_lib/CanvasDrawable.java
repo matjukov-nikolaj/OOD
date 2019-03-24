@@ -1,6 +1,6 @@
 package com.ood.colored.shape_drawing_lib;
 
-import com.ood.colored.graphics_lib.Canvas;
+import com.ood.not_colored.graphics_lib.Canvas;
 
 public interface CanvasDrawable {
 
