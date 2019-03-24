@@ -23,7 +23,7 @@ public class ResizeImageCommand extends AbstractCommand {
     }
 
     @Override
-    public void remove() {
+    public void destroy() {
 
     }
 

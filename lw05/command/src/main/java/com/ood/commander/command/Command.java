@@ -1,9 +1,11 @@
 package com.ood.commander.command;
 
-public interface Command extends Removable {
+public interface Command {
 
     void execute();
 
     void unExecute();
+
+    void destroy();
 
 }

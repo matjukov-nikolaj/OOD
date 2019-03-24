@@ -6,6 +6,7 @@ import com.ood.commander.command.ChangeStringCommand;
 import com.ood.commander.command.InsertImageCommand;
 import com.ood.commander.command.InsertParagraphCommand;
 import com.ood.commander.service.ImageController;
+import com.ood.commander.service.ImageControllerImpl;
 import com.ood.exception.WrongPositionException;
 
 import java.io.File;
@@ -21,7 +22,7 @@ public class DocumentImpl implements Document {
 
     private List<DocumentItem> documentItems = new ArrayList<>();
 
-    private ImageController imageController = new ImageController(System.getProperty("user.dir") + IMAGE_FOLDER);
+    private ImageController imageController = new ImageControllerImpl(System.getProperty("user.dir") + IMAGE_FOLDER);
 
     private static final String INDEX_HTML = "\\index.html";
 
@@ -88,8 +89,8 @@ public class DocumentImpl implements Document {
             throw new IndexOutOfBoundsException();
         }
         String newFilePath = this.imageController.add(path);
-        Image image = new ImageImpl(newFilePath, width, height, this.history);
-        this.history.addAndExecuteCommand(new InsertImageCommand(this.documentItems, image, position, this.imageController));
+        Image image = new ImageImpl(newFilePath, width, height, this.history, this.imageController);
+        this.history.addAndExecuteCommand(new InsertImageCommand(this.documentItems, image, position));
         return image;
     }
 
@@ -125,7 +126,7 @@ public class DocumentImpl implements Document {
 
     @Override
     public void deleteItem(int index) throws Exception {
-        this.history.addAndExecuteCommand(new DeleteItemCommand(index, this.documentItems, this.imageController));
+        this.history.addAndExecuteCommand(new DeleteItemCommand(index, this.documentItems));
     }
 
     @Override

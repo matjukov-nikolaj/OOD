@@ -8,13 +8,13 @@ import org.junit.Test;
 
 import java.io.File;
 
-public class ImageControllerTest {
+public class ImageControllerImplTest {
 
-    private ImageController imageController;
+    private ImageControllerImpl imageController;
 
     @Before
     public void setUp() {
-        this.imageController = new ImageController(Constants.IMAGE_DIRECTORY);
+        this.imageController = new ImageControllerImpl(Constants.IMAGE_DIRECTORY);
         Utilities.handleImageDirectory();
     }
 

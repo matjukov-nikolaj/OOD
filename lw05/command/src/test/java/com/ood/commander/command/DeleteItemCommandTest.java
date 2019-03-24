@@ -3,7 +3,7 @@ package com.ood.commander.command;
 import com.ood.commander.Constants;
 import com.ood.commander.model.*;
 import com.ood.commander.service.History;
-import com.ood.commander.service.ImageController;
+import com.ood.commander.service.ImageControllerImpl;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -23,18 +23,18 @@ public class DeleteItemCommandTest {
 
     private Paragraph paragraph;
 
-    private ImageController imageController;
+    private ImageControllerImpl imageController;
 
     @Before
     public void setUp() {
         this.history = new History();
-        this.image = new ImageImpl(Constants.EXISTING_IMAGE, Constants.IMAGE_SIZE, Constants.IMAGE_SIZE, this.history);
+        this.image = new ImageImpl(Constants.EXISTING_IMAGE, Constants.IMAGE_SIZE, Constants.IMAGE_SIZE, this.history, new ImageControllerImpl(Constants.IMAGE_DIRECTORY));
         this.items = new ArrayList<>();
         this.paragraph = new ParagraphImpl(Constants.TEXT, this.history);
-        this.imageController = new ImageController(Constants.IMAGE_DIRECTORY);
+        this.imageController = new ImageControllerImpl(Constants.IMAGE_DIRECTORY);
         try {
             this.history.addAndExecuteCommand(new InsertParagraphCommand(this.items, this.paragraph, 0));
-            this.history.addAndExecuteCommand(new InsertImageCommand(items, image, 1, imageController));
+            this.history.addAndExecuteCommand(new InsertImageCommand(items, image, 1));
         } catch (Exception e) {
             fail();
         }
@@ -43,7 +43,7 @@ public class DeleteItemCommandTest {
     @Test
     public void canExecuteDeleteItemCommand() {
         try {
-            DeleteItemCommand deleteItemCommand = new DeleteItemCommand(0, this.items, imageController);
+            DeleteItemCommand deleteItemCommand = new DeleteItemCommand(0, this.items);
             this.history.addAndExecuteCommand(deleteItemCommand);
             Assert.assertEquals(1, this.items.size());
             Assert.assertEquals(Constants.EXISTING_IMAGE, this.items.get(0).getImage().getPath());
@@ -56,7 +56,7 @@ public class DeleteItemCommandTest {
     @Test
     public void canExecuteDeleteItemCommandAndThenUnExecute() {
         try {
-            DeleteItemCommand deleteItemCommand = new DeleteItemCommand(0, this.items, imageController);
+            DeleteItemCommand deleteItemCommand = new DeleteItemCommand(0, this.items);
             this.history.addAndExecuteCommand(deleteItemCommand);
             Assert.assertEquals(1, this.items.size());
             this.history.undo();
@@ -70,7 +70,7 @@ public class DeleteItemCommandTest {
     @Test
     public void ifTryingToSetDeleteItemInWrongPositionThrowWrongPositionException() {
         try {
-            DeleteItemCommand deleteItemCommand = new DeleteItemCommand(-2, items, imageController);
+            DeleteItemCommand deleteItemCommand = new DeleteItemCommand(-2, items);
             fail();
         } catch (Exception e) {
             Assert.assertEquals("Wrong position: -2", e.getMessage());
@@ -80,10 +80,10 @@ public class DeleteItemCommandTest {
     @Test
     public void ifPerformImageDeletionImageIsMarkedForDeletion() {
         try {
-            DeleteItemCommand deleteItemCommand = new DeleteItemCommand(1, this.items, imageController);
+            DeleteItemCommand deleteItemCommand = new DeleteItemCommand(1, this.items);
             this.history.addAndExecuteCommand(deleteItemCommand);
             Assert.assertEquals(1, this.items.size());
-            Assert.assertEquals(1, this.imageController.getImagesToRemove().size());
+            Assert.assertEquals(1, this.image.getController().getImagesToRemove().size());
         } catch (Exception e) {
             fail();
         }

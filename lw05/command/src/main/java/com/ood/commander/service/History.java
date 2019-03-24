@@ -5,7 +5,7 @@ import com.ood.commander.command.Command;
 import java.util.ArrayList;
 import java.util.List;
 
-public class History {
+public class History implements Executor {
 
     private int nextCommandIndex;
 
@@ -38,6 +38,7 @@ public class History {
         }
     }
 
+    @Override
     public void addAndExecuteCommand(Command command) throws Exception {
         if (this.commands.size() == 10) {
             this.commands.remove(0);
@@ -47,7 +48,7 @@ public class History {
         List<Command> tempCommands = new ArrayList<>(this.commands);
         this.commands = this.commands.subList(0, this.nextCommandIndex);
         for (int i = this.nextCommandIndex; i < tempCommands.size(); ++i) {
-            tempCommands.get(i).remove();
+            tempCommands.get(i).destroy();
         }
         this.commands = this.commands.subList(0, this.nextCommandIndex);
 

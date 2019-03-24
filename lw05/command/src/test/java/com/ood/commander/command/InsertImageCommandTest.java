@@ -6,7 +6,7 @@ import com.ood.commander.model.Image;
 import com.ood.commander.model.ImageImpl;
 import com.ood.commander.model.ParagraphImpl;
 import com.ood.commander.service.History;
-import com.ood.commander.service.ImageController;
+import com.ood.commander.service.ImageControllerImpl;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -24,20 +24,20 @@ public class InsertImageCommandTest {
 
     private List<DocumentItem> items;
 
-    private ImageController imageController;
+    private ImageControllerImpl imageController;
 
     @Before
     public void setUp() {
         this.history = new History();
-        this.image = new ImageImpl(Constants.EXISTING_IMAGE, Constants.IMAGE_SIZE, Constants.IMAGE_SIZE, this.history);
+        this.imageController = new ImageControllerImpl(Constants.IMAGE_DIRECTORY);
+        this.image = new ImageImpl(Constants.EXISTING_IMAGE, Constants.IMAGE_SIZE, Constants.IMAGE_SIZE, this.history, this.imageController);
         this.items = new ArrayList<>();
-        this.imageController = new ImageController(Constants.IMAGE_DIRECTORY);
     }
 
     @Test
     public void canCreateInsertImageCommandAndExecute() {
         try {
-            InsertImageCommand insertImageCommand = new InsertImageCommand(items, image, 0, imageController);
+            InsertImageCommand insertImageCommand = new InsertImageCommand(items, image, 0);
             this.history.addAndExecuteCommand(insertImageCommand);
             Assert.assertEquals(1, this.items.size());
             Assert.assertEquals(1, this.items.size());
@@ -51,7 +51,7 @@ public class InsertImageCommandTest {
     @Test
     public void canExecuteInsertImageCommand() {
         try {
-            InsertImageCommand insertImageCommand = new InsertImageCommand(items, image, 0, imageController);
+            InsertImageCommand insertImageCommand = new InsertImageCommand(items, image, 0);
             this.history.addAndExecuteCommand(insertImageCommand);
             Assert.assertEquals(1, this.items.size());
             this.history.undo();
@@ -64,7 +64,7 @@ public class InsertImageCommandTest {
     @Test
     public void ifTryingToSetInsertImagesInWrongPositionThrowWrongPositionException() {
         try {
-            InsertImageCommand insertImageCommand = new InsertImageCommand(items, image, -2, imageController);
+            InsertImageCommand insertImageCommand = new InsertImageCommand(items, image, -2);
             fail();
         } catch (Exception e) {
             Assert.assertEquals("Wrong position: -2", e.getMessage());
@@ -75,7 +75,7 @@ public class InsertImageCommandTest {
     public void canSetInTheDocumentEndByPositionMinusOne() {
         try {
             this.history.addAndExecuteCommand(new InsertParagraphCommand(this.items, new ParagraphImpl(Constants.TEXT, this.history), 0));
-            InsertImageCommand insertImageCommand = new InsertImageCommand(items, image, -1, imageController);
+            InsertImageCommand insertImageCommand = new InsertImageCommand(items, image, -1);
             this.history.addAndExecuteCommand(insertImageCommand);
             Assert.assertEquals(2, this.items.size());
             int end = this.items.size() - 1;

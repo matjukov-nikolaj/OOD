@@ -4,6 +4,7 @@ import com.ood.commander.Constants;
 import com.ood.commander.model.Image;
 import com.ood.commander.model.ImageImpl;
 import com.ood.commander.service.History;
+import com.ood.commander.service.ImageControllerImpl;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -18,7 +19,7 @@ public class ResizeImageCommandTest {
     @Before
     public void setUp() {
         this.history = new History();
-        this.image = new ImageImpl(Constants.EXISTING_IMAGE, Constants.IMAGE_SIZE, Constants.IMAGE_SIZE, history);
+        this.image = new ImageImpl(Constants.EXISTING_IMAGE, Constants.IMAGE_SIZE, Constants.IMAGE_SIZE, history, new ImageControllerImpl(Constants.IMAGE_DIRECTORY));
     }
 
     @Test

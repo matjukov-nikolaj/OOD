@@ -17,7 +17,7 @@ public class ChangeStringCommand extends AbstractCommand {
     }
 
     @Override
-    public void remove() {
+    public void destroy() {
 
     }
 

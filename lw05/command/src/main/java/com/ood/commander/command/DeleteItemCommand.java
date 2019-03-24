@@ -2,7 +2,7 @@ package com.ood.commander.command;
 
 import com.ood.commander.model.DocumentItem;
 import com.ood.commander.model.Image;
-import com.ood.commander.service.ImageController;
+import com.ood.commander.service.ImageControllerImpl;
 import com.ood.exception.WrongPositionException;
 
 import java.util.List;
@@ -15,23 +15,20 @@ public class DeleteItemCommand extends AbstractCommand {
 
     private DocumentItem item;
 
-    private ImageController imageController;
-
-    public DeleteItemCommand(int position, List<DocumentItem> items, ImageController imageController) throws WrongPositionException {
+    public DeleteItemCommand(int position, List<DocumentItem> items) throws WrongPositionException {
         if (position < -1) {
             throw new WrongPositionException(position);
         }
         this.items = items;
         this.position = position;
         this.item = items.get(position);
-        this.imageController = imageController;
     }
 
     @Override
-    public void remove() {
+    public void destroy() {
         Image image = this.item.getImage();
         if (image != null) {
-            this.imageController.delete(image.getPath());
+            image.getController().delete(image.getPath());
         }
     }
 
@@ -43,7 +40,7 @@ public class DeleteItemCommand extends AbstractCommand {
         }
         Image image = this.item.getImage();
         if (image != null) {
-            this.imageController.markForDeletion(image.getPath(), true);
+            image.getController().markForDeletion(image.getPath(), true);
         }
     }
 
@@ -55,7 +52,7 @@ public class DeleteItemCommand extends AbstractCommand {
         }
         Image image = this.item.getImage();
         if (image != null) {
-            this.imageController.markForDeletion(image.getPath(), false);
+            image.getController().markForDeletion(image.getPath(), false);
         }
     }
 

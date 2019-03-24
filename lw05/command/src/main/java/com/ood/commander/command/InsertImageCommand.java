@@ -2,7 +2,6 @@ package com.ood.commander.command;
 
 import com.ood.commander.model.DocumentItem;
 import com.ood.commander.model.Image;
-import com.ood.commander.service.ImageController;
 import com.ood.exception.WrongPositionException;
 
 import java.util.List;
@@ -15,20 +14,17 @@ public class InsertImageCommand extends AbstractCommand {
 
     List<DocumentItem> items;
 
-    private ImageController imageController;
-
-    public InsertImageCommand(List<DocumentItem> items, Image image, int position, ImageController imageController) throws WrongPositionException {
+    public InsertImageCommand(List<DocumentItem> items, Image image, int position) throws WrongPositionException {
         if (position < -1) {
             throw new WrongPositionException(position);
         }
         this.position = position;
         this.image = image;
         this.items = items;
-        this.imageController = imageController;
     }
 
-    public void remove() {
-        this.imageController.delete(this.image.getPath());
+    public void destroy() {
+        this.image.getController().delete(this.image.getPath());
     }
 
     @Override
@@ -38,7 +34,7 @@ public class InsertImageCommand extends AbstractCommand {
         } else {
             this.items.add(position, new DocumentItem(this.image));
         }
-        this.imageController.markForDeletion(this.image.getPath(), false);
+        this.image.getController().markForDeletion(this.image.getPath(), false);
     }
 
     @Override
@@ -48,7 +44,7 @@ public class InsertImageCommand extends AbstractCommand {
         } else {
             this.items.remove(this.position);
         }
-        this.imageController.markForDeletion(this.image.getPath(), true);
+        this.image.getController().markForDeletion(this.image.getPath(), true);
     }
 
 

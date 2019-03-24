@@ -1,7 +1,8 @@
 package com.ood.commander.model;
 
-import com.ood.commander.service.History;
+import com.ood.commander.service.Executor;
 import com.ood.commander.command.ResizeImageCommand;
+import com.ood.commander.service.ImageController;
 
 import java.io.File;
 
@@ -13,9 +14,11 @@ public class ImageImpl implements Image {
 
     private int height;
 
-    private History history;
+    private Executor executor;
 
-    public ImageImpl(String path, int width, int height, History history) {
+    private ImageController controller;
+
+    public ImageImpl(String path, int width, int height, Executor executor, ImageController controller) {
         File file = new File(path);
         if (!file.exists() || file.isDirectory()) {
             throw new IllegalArgumentException("Incorrect file path.");
@@ -24,7 +27,12 @@ public class ImageImpl implements Image {
         this.path = path;
         this.width = width;
         this.height = height;
-        this.history = history;
+        this.executor = executor;
+        this.controller = controller;
+    }
+
+    public ImageController getController() {
+        return this.controller;
     }
 
     @Override
@@ -55,7 +63,7 @@ public class ImageImpl implements Image {
     @Override
     public void resize(int newWidth, int newHeight) throws Exception {
         this.checkImageSize(newWidth, newHeight);
-        this.history.addAndExecuteCommand(new ResizeImageCommand(this, this.width, this.height, newWidth, newHeight));
+        this.executor.addAndExecuteCommand(new ResizeImageCommand(this, this.width, this.height, newWidth, newHeight));
     }
 
     private void checkImageSize(int width, int height) {

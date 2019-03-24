@@ -1,17 +1,17 @@
 package com.ood.commander.model;
 
-import com.ood.commander.service.History;
 import com.ood.commander.command.ChangeStringCommand;
+import com.ood.commander.service.Executor;
 
 public class ParagraphImpl implements Paragraph {
 
     private String text;
 
-    private History history;
+    private Executor executor;
 
-    public ParagraphImpl(String text, History history) {
+    public ParagraphImpl(String text, Executor executor) {
         this.text = text;
-        this.history = history;
+        this.executor = executor;
     }
 
     @Override
@@ -31,6 +31,6 @@ public class ParagraphImpl implements Paragraph {
 
     @Override
     public void setParagraphText(String text) throws Exception {
-        this.history.addAndExecuteCommand(new ChangeStringCommand(this.text, text, this));
+        this.executor.addAndExecuteCommand(new ChangeStringCommand(this.text, text, this));
     }
 }

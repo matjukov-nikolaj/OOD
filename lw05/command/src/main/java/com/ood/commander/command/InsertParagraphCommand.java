@@ -24,7 +24,7 @@ public class InsertParagraphCommand extends AbstractCommand {
     }
 
     @Override
-    public void remove() {
+    public void destroy() {
 
     }
 
