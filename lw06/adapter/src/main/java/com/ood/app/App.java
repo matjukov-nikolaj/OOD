@@ -34,13 +34,25 @@ public class App {
         // TODO: при помощи существующей функции PaintPicture() нарисовать картину на renderer
         CanvasObjectAdapter objectAdapter = new CanvasObjectAdapter(modernGraphicsRenderer);
         CanvasPainter canvasPainter = new CanvasPainter(objectAdapter);
-        paintPicture(canvasPainter);
+        try {
+            objectAdapter.getRenderer().beginDraw();
+            paintPicture(canvasPainter);
+            objectAdapter.getRenderer().endDraw();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     public static void paintPictureOnModernGraphicsRendererWithCanvasClassAdapter() {
         CanvasClassAdapter classAdapter = new CanvasClassAdapter(System.out);
         CanvasPainter canvasPainter = new CanvasPainter(classAdapter);
-        paintPicture(canvasPainter);
+        try {
+            classAdapter.beginDraw();
+            paintPicture(canvasPainter);
+            classAdapter.endDraw();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     public static void paintColorPicture( com.ood.colored.shape_drawing_lib.CanvasPainter painter) {
@@ -61,7 +73,13 @@ public class App {
     public static void paintPictureOnModernGraphicsRendererWithCanvasColoredAdapter() {
         CanvasColoredAdaptor coloredAdaptor = new CanvasColoredAdaptor(System.out);
         com.ood.colored.shape_drawing_lib.CanvasPainter canvasPainter = new com.ood.colored.shape_drawing_lib.CanvasPainter(coloredAdaptor);
-        paintColorPicture(canvasPainter);
+        try {
+            coloredAdaptor.beginDraw();
+            paintColorPicture(canvasPainter);
+            coloredAdaptor.endDraw();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
 
     }
 

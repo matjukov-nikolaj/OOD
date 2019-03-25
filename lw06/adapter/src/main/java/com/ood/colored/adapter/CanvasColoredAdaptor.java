@@ -19,6 +19,22 @@ public class CanvasColoredAdaptor extends ModernGraphicsRenderer implements Canv
         this.lastPoint = new Point(0,0);
     }
 
+    public void startDraw() {
+        try {
+            beginDraw();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public void finishDraw() {
+        try {
+            endDraw();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
     @Override
     public void setColor(Color color) {
         this.color = color;
@@ -33,11 +49,9 @@ public class CanvasColoredAdaptor extends ModernGraphicsRenderer implements Canv
     @Override
     public void lineTo(int x, int y) {
         try {
-            this.beginDraw();
             Point newPoint = new Point(x, y);
             this.drawLine(this.lastPoint, newPoint, this.color);
             this.lastPoint = newPoint;
-            this.endDraw();
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }

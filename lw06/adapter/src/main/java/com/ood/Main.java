@@ -1,21 +1,20 @@
 package com.ood;
 
-import com.ood.app.App;
+import static com.ood.app.App.*;
 
 public class Main
 {
 
     public static void main( String[] args )
     {
-        App app = new App();
         printBock("ModernGraphicsRenderer with ObjectAdapter");
-        app.paintPictureOnModernGraphicsRendererWithCanvasObjectAdapter();
+        paintPictureOnModernGraphicsRendererWithCanvasObjectAdapter();
         printBock("Canvas");
-        app.paintPictureOnCanvas();
+        paintPictureOnCanvas();
         printBock("ModernGraphicsRenderer with ClassAdapter");
-        app.paintPictureOnModernGraphicsRendererWithCanvasClassAdapter();
+        paintPictureOnModernGraphicsRendererWithCanvasClassAdapter();
         printBock("ModernGraphicsRenderer with ColoredAdapter");
-        app.paintPictureOnModernGraphicsRendererWithCanvasColoredAdapter();
+        paintPictureOnModernGraphicsRendererWithCanvasColoredAdapter();
     }
 
     public static void printBock(String message) {

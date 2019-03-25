@@ -12,7 +12,11 @@ public class CanvasObjectAdapter implements Canvas {
 
     public CanvasObjectAdapter(ModernGraphicsRenderer renderer) {
         this.renderer = renderer;
-        this.lastPoint = new Point(0,0);
+        this.lastPoint = new Point(0, 0);
+    }
+
+    public ModernGraphicsRenderer getRenderer() {
+        return renderer;
     }
 
     @Override
@@ -24,11 +28,9 @@ public class CanvasObjectAdapter implements Canvas {
     @Override
     public void lineTo(int x, int y) {
         try {
-            this.renderer.beginDraw();
             Point newPoint = new Point(x, y);
             this.renderer.drawLine(this.lastPoint, newPoint);
             this.lastPoint = newPoint;
-            this.renderer.endDraw();
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }

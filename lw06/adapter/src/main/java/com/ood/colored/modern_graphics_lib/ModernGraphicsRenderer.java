@@ -1,7 +1,6 @@
 package com.ood.colored.modern_graphics_lib;
 
 import com.ood.exception.LogicErrorException;
-import com.ood.colored.modern_graphics_lib.Point;
 
 import java.awt.*;
 import java.io.PrintStream;

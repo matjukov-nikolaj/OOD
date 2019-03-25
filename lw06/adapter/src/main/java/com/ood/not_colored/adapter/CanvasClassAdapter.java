@@ -24,11 +24,9 @@ public class CanvasClassAdapter extends ModernGraphicsRenderer implements Canvas
     @Override
     public void lineTo(int x, int y) {
         try {
-            this.beginDraw();
             Point newPoint = new Point(x, y);
             this.drawLine(this.lastPoint, newPoint);
             this.lastPoint = newPoint;
-            this.endDraw();
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
