@@ -68,7 +68,7 @@ public abstract class ShapeImpl implements Shape {
             if (fillStyle.isEnabled()) {
                 canvas.beginFill(fillStyle.getColor());
             } else {
-                canvas.setFillColor(Color.WHITE);
+                canvas.setFillColor(new Color(0, 0,0,0));
             }
 
             if (outlineStyle.isEnabled()) {

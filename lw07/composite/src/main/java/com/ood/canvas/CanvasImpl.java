@@ -16,7 +16,7 @@ public class CanvasImpl implements Canvas {
 
     private float lineThickness;
 
-    private com.ood.shapes.Point lastPoint;
+    private Point lastPoint;
 
     private boolean isFilling = false;
 
