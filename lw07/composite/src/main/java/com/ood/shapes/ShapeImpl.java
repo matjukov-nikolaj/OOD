@@ -74,7 +74,7 @@ public abstract class ShapeImpl implements Shape {
             if (outlineStyle.isEnabled()) {
                 canvas.setLineColor(outlineStyle.getColor());
             } else {
-                canvas.setLineColor(Color.WHITE);
+                canvas.setLineColor(new Color(0, 0,0,0));
             }
 
             canvas.setLineThickness(lineThickness);
