@@ -8,7 +8,7 @@ import com.ood.shapes.Style;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GroupImpl implements Group {
+public class GroupShapeImpl implements GroupShape {
 
     private List<Shape> shapes;
 
@@ -18,7 +18,7 @@ public class GroupImpl implements Group {
 
     private float lineThickness;
 
-    public GroupImpl(Style outlineStyle, Style fillStyle, float lineThickness) {
+    public GroupShapeImpl(Style outlineStyle, Style fillStyle, float lineThickness) {
         this.fillStyle = fillStyle;
         this.outlineStyle = outlineStyle;
         this.lineThickness = lineThickness;
@@ -47,19 +47,19 @@ public class GroupImpl implements Group {
     public void setFrame(Rect<Float> frame) {
         Rect<Float> oldFrame = getFrame();
 
-        float ratioX = frame.getWidth() / oldFrame.getWidth();
-        float ratioY = frame.getHeight() / oldFrame.getHeight();
+        float diffX = frame.getWidth() / oldFrame.getWidth();
+        float diffY = frame.getHeight() / oldFrame.getHeight();
 
         for (Shape shape: shapes) {
             Rect<Float> shapeFrame = shape.getFrame();
 
-            float paddingX = shapeFrame.getLeft() - oldFrame.getLeft();
-            float paddingY = shapeFrame.getTop() - oldFrame.getTop();
+            float offsetX = shapeFrame.getLeft() - oldFrame.getLeft();
+            float offsetY = shapeFrame.getTop() - oldFrame.getTop();
 
-            shapeFrame.setLeft(frame.getLeft() + paddingX * ratioX);
-            shapeFrame.setTop(frame.getTop() + paddingY * ratioY);
-            shapeFrame.setWidth(shapeFrame.getWidth() * ratioX);
-            shapeFrame.setHeight(shapeFrame.getHeight() * ratioY);
+            shapeFrame.setLeft(frame.getLeft() + offsetX * diffX);
+            shapeFrame.setTop(frame.getTop() + offsetY * diffY);
+            shapeFrame.setWidth(shapeFrame.getWidth() * diffX);
+            shapeFrame.setHeight(shapeFrame.getHeight() * diffY);
         }
     }
 

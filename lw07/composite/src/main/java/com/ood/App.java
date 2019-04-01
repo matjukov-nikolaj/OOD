@@ -30,13 +30,13 @@ public class App
 
         Rect<Float> triangleFrameGroup = new Rect<>(300.0f, 200.0f, 100.0f, 100.0f);
         Triangle triangleGroup = new Triangle(triangleFrameGroup, new StyleImpl(true, Color.decode("#869f86")), new StyleImpl(true, Color.decode("#bcc4dd")), 15.0f);
-        Group group = new GroupImpl(new StyleImpl(true, Color.decode("#869f86")), new StyleImpl(true, Color.decode("#bcc4dd")), 10.0f);
+        GroupShape group = new GroupShapeImpl(new StyleImpl(true, Color.decode("#869f86")), new StyleImpl(true, Color.decode("#bcc4dd")), 10.0f);
         group.insertShape(rectangleGroup, 0);
         group.insertShape(ellipseGroup, 1);
         group.insertShape(triangleGroup, 2);
 
         Rect<Float> groupFrame = new Rect<>(5.0f, 200.0f, 700.0f, 200.0f);
-        ((GroupImpl) group).setFrame(groupFrame);
+        ((GroupShapeImpl) group).setFrame(groupFrame);
         slide.getShapes().add(rectangle);
         slide.getShapes().add(triangle);
         slide.getShapes().add(ellipse);

@@ -15,7 +15,7 @@ import java.io.PrintStream;
 
 import static org.junit.Assert.*;
 
-public class GroupImplTest {
+public class GroupShapeImplTest {
 
     private ByteArrayOutputStream output = new ByteArrayOutputStream();
     private final PrintStream old = System.out;
@@ -38,7 +38,7 @@ public class GroupImplTest {
 
     @Test
     public void canCreateGroup() {
-        Group group = getSimpleGroup();
+        GroupShape group = getSimpleGroup();
 
         assertEquals(3, group.getShapesCount());
         assertEquals(simpleFrame, group.getFrame());
@@ -46,7 +46,7 @@ public class GroupImplTest {
 
     @Test
     public void canChangeGroupFrame() {
-        Group group = getSimpleGroup();
+        GroupShape group = getSimpleGroup();
 
         group.setFrame(bigFrame);
         assertEquals(group.getFrame(), new Rect<>(0f, 0f, 500f, 200f));
@@ -54,7 +54,7 @@ public class GroupImplTest {
 
     @Test
     public void canSetOutlineStyle() {
-        Group group = getSimpleGroup();
+        GroupShape group = getSimpleGroup();
         group.setOutlineStyle(new StyleImpl(true, Color.decode("#ff0000")));
         for(Shape shape: group.getShapes()) {
             assertEquals(Color.RED, shape.getOutlineStyle().getColor());
@@ -63,7 +63,7 @@ public class GroupImplTest {
 
     @Test
     public void canSetFillStyle() {
-        Group group = getSimpleGroup();
+        GroupShape group = getSimpleGroup();
         group.setFillStyle(new StyleImpl(true, Color.decode("#00FF00")));
         for(Shape shape: group.getShapes()) {
             assertEquals(Color.GREEN, shape.getFillStyle().getColor());
@@ -72,25 +72,25 @@ public class GroupImplTest {
 
     @Test
     public void canGetLineThicknessIfAllLineThicknessAreEquals() {
-        Group group = getSimpleGroup();
+        GroupShape group = getSimpleGroup();
         assertEquals(0f, group.getLineThickness(), 0f);
     }
 
     @Test
     public void ifOneOfFillStyleIsDifferentReturnNull() {
-        Group group = getGroup();
+        GroupShape group = getGroup();
         assertNull(group.getFillStyle());
     }
 
     @Test
     public void ifOneOfOutlineStyleIsDifferentReturnNull() {
-        Group group = getGroup();
+        GroupShape group = getGroup();
         assertNull(group.getOutlineStyle());
     }
 
     @Test
     public void canInsertShape() {
-        Group group = getGroup();
+        GroupShape group = getGroup();
         Rect<Float> triangleFrameForGroup = new Rect<>(0.0f, 0.0f, 100.0f, 100.0f);
         Triangle triangleForGroup = new Triangle(triangleFrameForGroup, greenStyle, greenStyle, 0.0f);
         group.insertShape(triangleForGroup, 0);
@@ -100,7 +100,7 @@ public class GroupImplTest {
 
     @Test
     public void canRemoveShape() {
-        Group group = getGroup();
+        GroupShape group = getGroup();
         Rect<Float> triangleFrameForGroup = new Rect<>(0.0f, 0.0f, 100.0f, 100.0f);
         Triangle triangleForGroup = new Triangle(triangleFrameForGroup, greenStyle, greenStyle, 0.0f);
         group.insertShape(triangleForGroup, 0);
@@ -114,7 +114,7 @@ public class GroupImplTest {
     @Test
     public void canDrawShape() {
         output.reset();
-        Group group = getGroup();
+        GroupShape group = getGroup();
         Canvas simpleCanvas = new SimpleCanvas();
         group.draw(simpleCanvas);
         String expectedOutput = "Begin fill\r\n" +
@@ -148,7 +148,7 @@ public class GroupImplTest {
     @Test
     public void ifChangedGroupFrameShapesWillBePaintedInAnotherFrame() {
         output.reset();
-        Group group = getGroup();
+        GroupShape group = getGroup();
         group.setFrame(bigFrame);
         Canvas simpleCanvas = new SimpleCanvas();
         group.draw(simpleCanvas);
@@ -180,15 +180,15 @@ public class GroupImplTest {
         assertEquals(expectedOutput, output.toString());
     }
 
-    private Group getGroup() {
-        Group group = getSimpleGroup();
+    private GroupShape getGroup() {
+        GroupShape group = getSimpleGroup();
         Rect<Float> triangleFrameForGroup = new Rect<>(0.0f, 0.0f, 100.0f, 100.0f);
         Triangle triangleForGroup = new Triangle(triangleFrameForGroup, greenStyle, greenStyle, 0.0f);
         group.insertShape(triangleForGroup, 0);
         return group;
     }
 
-    private Group getSimpleGroup() {
+    private GroupShape getSimpleGroup() {
         Rect<Float> rectFrameForGroup = new Rect<>(0.0f, 0.0f, 100.0f, 100.0f);
         com.ood.shapes.Rectangle rectangleForGroup = new Rectangle(rectFrameForGroup, simpleStyle, simpleStyle, 0.0f);
 
@@ -198,7 +198,7 @@ public class GroupImplTest {
         Rect<Float> triangleFrameForGroup = new Rect<>(0.0f, 0.0f, 100.0f, 100.0f);
         Triangle triangleForGroup = new Triangle(triangleFrameForGroup, simpleStyle, simpleStyle, 0.0f);
 
-        Group group = new GroupImpl(simpleStyle, simpleStyle, 0.0f);
+        GroupShape group = new GroupShapeImpl(simpleStyle, simpleStyle, 0.0f);
         group.insertShape(rectangleForGroup, 0);
         group.insertShape(ellipseForGroup, 1);
         group.insertShape(triangleForGroup, 2);

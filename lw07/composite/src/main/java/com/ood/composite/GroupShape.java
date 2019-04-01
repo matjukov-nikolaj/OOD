@@ -4,7 +4,7 @@ import com.ood.shapes.Shape;
 
 import java.util.List;
 
-public interface Group extends Shape {
+public interface GroupShape extends Shape {
 
     int getShapesCount();
 
