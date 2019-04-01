@@ -12,7 +12,7 @@ import java.awt.*;
 public class App
 {
 
-    public static void createSlideImage(Slide slide) {
+    public static void createImageOnSlide(Slide slide) {
         Rect<Float> rectFrame = new Rect<>(5.0f, 5.0f, 100.0f, 100.0f);
         Rectangle rectangle = new Rectangle(rectFrame, new StyleImpl(true, Color.decode("#4261ff")), new StyleImpl(true, Color.decode("#a2baba")), 5.0f);
 
@@ -22,21 +22,21 @@ public class App
         Rect<Float> triangleFrame = new Rect<>(300.0f, 15.0f, 100.0f, 100.0f);
         Triangle triangle = new Triangle(triangleFrame, new StyleImpl(true, Color.decode("#869f86")), new StyleImpl(true, Color.decode("#bcc4dd")), 15.0f);
 
-        Rect<Float> rectFrameGroup = new Rect<>(5.0f, 200.0f, 100.0f, 100.0f);
-        Rectangle rectangleGroup = new Rectangle(rectFrameGroup, new StyleImpl(true, Color.decode("#4261ff")), new StyleImpl(true, Color.decode("#a2baba")), 5.0f);
+        Rect<Float> rectFrameForGroup = new Rect<>(5.0f, 200.0f, 100.0f, 100.0f);
+        Rectangle rectangleForGroup = new Rectangle(rectFrameForGroup, new StyleImpl(true, Color.decode("#4261ff")), new StyleImpl(true, Color.decode("#a2baba")), 5.0f);
 
-        Rect<Float> ellipseFrameGroup = new Rect<>(150.0f, 200.0f, 100.0f, 100.0f);
-        Ellipse ellipseGroup = new Ellipse(ellipseFrameGroup, new StyleImpl(true, Color.decode("#ff0000")), new StyleImpl(true, Color.decode("#dfcaae")), 10.0f);
+        Rect<Float> ellipseFrameForGroup = new Rect<>(150.0f, 200.0f, 100.0f, 100.0f);
+        Ellipse ellipseForGroup = new Ellipse(ellipseFrameForGroup, new StyleImpl(true, Color.decode("#ff0000")), new StyleImpl(true, Color.decode("#dfcaae")), 10.0f);
 
-        Rect<Float> triangleFrameGroup = new Rect<>(300.0f, 200.0f, 100.0f, 100.0f);
-        Triangle triangleGroup = new Triangle(triangleFrameGroup, new StyleImpl(true, Color.decode("#869f86")), new StyleImpl(true, Color.decode("#bcc4dd")), 15.0f);
+        Rect<Float> triangleFrameForGroup = new Rect<>(300.0f, 200.0f, 100.0f, 100.0f);
+        Triangle triangleForGroup = new Triangle(triangleFrameForGroup, new StyleImpl(true, Color.decode("#869f86")), new StyleImpl(true, Color.decode("#bcc4dd")), 15.0f);
         GroupShape group = new GroupShapeImpl(new StyleImpl(true, Color.decode("#869f86")), new StyleImpl(true, Color.decode("#bcc4dd")), 10.0f);
-        group.insertShape(rectangleGroup, 0);
-        group.insertShape(ellipseGroup, 1);
-        group.insertShape(triangleGroup, 2);
+        group.insertShape(rectangleForGroup, 0);
+        group.insertShape(ellipseForGroup, 1);
+        group.insertShape(triangleForGroup, 2);
 
         Rect<Float> groupFrame = new Rect<>(5.0f, 200.0f, 700.0f, 200.0f);
-        ((GroupShapeImpl) group).setFrame(groupFrame);
+        group.setFrame(groupFrame);
         slide.getShapes().add(rectangle);
         slide.getShapes().add(triangle);
         slide.getShapes().add(ellipse);
@@ -58,7 +58,7 @@ public class App
                     graphics2D = (Graphics2D) g;
                     Canvas canvas = new CanvasImpl(graphics2D);
                     Slide slide = new SlideImpl(800.0f, 600.0f);
-                    createSlideImage(slide);
+                    createImageOnSlide(slide);
                     slide.draw(canvas);
                 }
             };
