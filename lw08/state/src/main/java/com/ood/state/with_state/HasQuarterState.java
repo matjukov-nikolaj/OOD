@@ -1,5 +1,7 @@
 package com.ood.state.with_state;
 
+import com.ood.exception.WrongAmountException;
+
 public class HasQuarterState implements State {
 
     private GumballMachine gumballMachine;
@@ -10,18 +12,19 @@ public class HasQuarterState implements State {
 
     @Override
     public void insertQuarter() {
-        System.out.println("You can't insert another quarter");
+        gumballMachine.getQuartersController().addQuarter();
     }
 
     @Override
     public void ejectQuarter() {
-        System.out.println("Quarter returned");
+        gumballMachine.getQuartersController().returnQuarters();
         gumballMachine.setNoQuarterState();
     }
 
     @Override
     public void turnCrank() {
         System.out.println("You turned...");
+        gumballMachine.getQuartersController().useQuarter();
         gumballMachine.setSoldState();
     }
 
@@ -35,4 +38,13 @@ public class HasQuarterState implements State {
         return "waiting for turn of crank";
     }
 
+    @Override
+    public void refill(int ballsCount) throws WrongAmountException {
+        if (ballsCount < 0) {
+            throw new WrongAmountException("Count of gumballs cant be less than zero.");
+        }
+        if (ballsCount == 0) {
+            gumballMachine.setSoldOutState();
+        }
+    }
 }

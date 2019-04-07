@@ -10,12 +10,12 @@ public class SoldState implements State {
 
     @Override
     public void insertQuarter() {
-        System.out.println("Please wait, we're already giving you a gumball");
+        gumballMachine.getQuartersController().addQuarter();
     }
 
     @Override
     public void ejectQuarter() {
-        System.out.println("Sorry you already turned the crank");
+        gumballMachine.getQuartersController().returnQuarters();
     }
 
     @Override
@@ -30,13 +30,20 @@ public class SoldState implements State {
         {
             System.out.println("Oops, out of gumballs");
             gumballMachine.setSoldOutState();
-        } else {
+        } else if (gumballMachine.getQuartersController().getQuartersCount() == 0) {
             gumballMachine.setNoQuarterState();
+        } else {
+            gumballMachine.setHasQuarterState();
         }
     }
 
     @Override
     public String toString() {
         return "delivering a gumball";
+    }
+
+    @Override
+    public void refill(int ballsCount) {
+        System.out.println("Cant refill machine in SOLD state");
     }
 }

@@ -1,4 +1,4 @@
-package com.ood;
+package com.ood.exception;
 
 public class WrongAmountException extends Exception {
 

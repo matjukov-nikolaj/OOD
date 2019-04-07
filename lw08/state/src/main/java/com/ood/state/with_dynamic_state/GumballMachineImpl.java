@@ -1,12 +1,15 @@
 package com.ood.state.with_dynamic_state;
 
-import com.ood.WrongAmountException;
+import com.ood.exception.WrongAmountException;
+import com.ood.state.service.QuartersController;
 
 public class GumballMachineImpl implements GumballMachine {
 
     private int count;
 
     private State state;
+
+    private QuartersController controller;
 
     public GumballMachineImpl(int numBalls) throws WrongAmountException{
         if (numBalls < 0) {
@@ -67,6 +70,18 @@ public class GumballMachineImpl implements GumballMachine {
 
     public void setHasQuarterState() {
         state = new HasQuarterState(this);
+    }
+
+    public QuartersController getQuartersController() {
+        return controller;
+    }
+
+    @Override
+    public void setBallsCount(int ballsCount) throws WrongAmountException {
+        if (ballsCount < 0) {
+            throw new WrongAmountException("Count of gumballs cant be less than zero.");
+        }
+        this.count = ballsCount;
     }
 
 }

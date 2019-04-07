@@ -1,6 +1,8 @@
 package com.ood.state.with_state;
 
-import com.ood.WrongAmountException;
+import com.ood.exception.WrongAmountException;
+import com.ood.state.service.QuartersController;
+import com.ood.state.service.QuartersControllerImpl;
 
 public class GumballMachineImpl implements GumballMachine {
 
@@ -14,12 +16,13 @@ public class GumballMachineImpl implements GumballMachine {
 
     private HasQuarterState hasQuarterState;
 
+    private QuartersController controller;
+
     private State state;
 
     public GumballMachineImpl(int numBalls) throws WrongAmountException{
         if (numBalls < 0) {
             throw new WrongAmountException("Count of gumballs cant be less than zero.");
-
         }
         this.count = numBalls;
 
@@ -28,7 +31,8 @@ public class GumballMachineImpl implements GumballMachine {
         this.noQuarterState = new NoQuarterState(this);
         this.hasQuarterState = new HasQuarterState(this);
 
-        this.state = this.noQuarterState;
+        this.controller = new QuartersControllerImpl();
+        this.state = count > 0 ? this.noQuarterState : this.soldOutState;
 
     }
 
@@ -60,7 +64,7 @@ public class GumballMachineImpl implements GumballMachine {
     public void releaseBall() {
         if (count != 0)
         {
-            System.out.println("A gumball comes rolling out the slot...");
+            System.out.println("A gumball comes rolling out the slot");
             --count;
         }
     }
@@ -81,4 +85,28 @@ public class GumballMachineImpl implements GumballMachine {
         state = hasQuarterState;
     }
 
+    @Override
+    public QuartersController getQuartersController() {
+        return controller;
+    }
+
+    @Override
+    public void refill(int ballsCount) throws WrongAmountException {
+        if (ballsCount < 0) {
+            throw new WrongAmountException("Count of gumballs cant be less than zero.");
+        }
+        this.state.refill(ballsCount);
+    }
+
+    public State getState() {
+        return state;
+    }
+
+    public void setState(State state) {
+        this.state = state;
+    }
+
+    public int getBallsCount() {
+        return count;
+    }
 }

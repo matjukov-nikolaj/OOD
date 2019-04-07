@@ -1,5 +1,8 @@
 package com.ood.state.with_state;
 
+import com.ood.exception.WrongAmountException;
+import com.ood.state.service.QuartersController;
+
 public interface GumballMachine {
 
     void releaseBall();
@@ -13,5 +16,9 @@ public interface GumballMachine {
     void setSoldState();
 
     void setHasQuarterState();
+
+    void refill(int numBalls) throws WrongAmountException;
+
+    QuartersController getQuartersController();
 
 }

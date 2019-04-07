@@ -1,13 +1,13 @@
 package com.ood;
 
-import org.apache.log4j.Logger;
+import com.ood.state.service.MenuController;
 
 public class App
 {
-    private static final Logger LOG = Logger.getLogger(App.class);
 
     public static void main( String[] args )
     {
-        LOG.info("Hello world!");
+        MenuController menuController = new MenuController();
+        menuController.start();
     }
 }
