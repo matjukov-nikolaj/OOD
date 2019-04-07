@@ -56,6 +56,7 @@ public abstract class ShapeImpl implements Shape {
     }
 
     @Override
+
     public void setLineThickness(float lineThickness) {
         this.lineThickness = lineThickness;
     }
