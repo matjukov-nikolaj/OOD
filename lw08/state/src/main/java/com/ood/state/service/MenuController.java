@@ -1,6 +1,5 @@
 package com.ood.state.service;
 
-import com.ood.state.with_state.GumballMachine;
 import com.ood.state.with_state.GumballMachineImpl;
 
 import java.util.List;
