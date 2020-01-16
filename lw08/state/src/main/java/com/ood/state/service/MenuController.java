@@ -12,18 +12,19 @@ public class MenuController {
 
     private static final String EXIT = "Exit";
 
-    private static final String INSERT_QUARTER = "insertQuarter";
+    private static final String INSERT_QUARTER = "InsertQuarter";
 
-    private static final String EJECT_QUARTER = "ejectQuarter";
+    private static final String EJECT_QUARTER = "EjectQuarter";
 
-    private static final String TURN_CRANK = "turnCrank";
+    private static final String REFILL = "Refill";
 
-    private static final String TO_STRING = "toString";
+    private static final String TURN_CRANK = "TurnCrank";
+
+    private static final String TO_STRING = "ToString";
 
     private static final String WITHOUT_PARAMETERS = "Without parameters.";
 
     private static final String HELP = "Help";
-
 
     public MenuController() {
         this.menu = new Menu();
@@ -33,6 +34,7 @@ public class MenuController {
             this.menu.addItem(EJECT_QUARTER, EJECT_QUARTER  + ". " + WITHOUT_PARAMETERS, this.ejectQuarterCommand());
             this.menu.addItem(TURN_CRANK, TURN_CRANK  + ". " + WITHOUT_PARAMETERS, this.turnCrankCommand());
             this.menu.addItem(TO_STRING, TO_STRING  + ". " + WITHOUT_PARAMETERS, this.toStringCommand());
+            this.menu.addItem(REFILL, REFILL  + ". " + "<Number of gumballs>", this.refillCommand());
             this.menu.addItem(INSERT_QUARTER, INSERT_QUARTER  + ". " + WITHOUT_PARAMETERS, this.insertQuarterCommand());
             this.menu.addItem(EXIT, EXIT + ". " + WITHOUT_PARAMETERS, this.exit());
         } catch (Exception e) {
@@ -47,6 +49,21 @@ public class MenuController {
     private void showErrorForCommand(String message) {
         System.out.println("Incorrect number of parameter for \"" + message + "\" command.");
         this.menu.showInstruction();
+    }
+
+    private Function refillCommand() {
+        return (List<String> args) -> {
+            if (args.size() != 2) {
+                this.showErrorForCommand(EXIT);
+                return;
+            }
+            int number = Integer.parseInt(args.get(1));
+            try {
+                gumballMachine.refill(number);
+            } catch (Exception e) {
+                System.out.println(e.getClass() + " - " + e.getMessage());
+            }
+        };
     }
 
     private Function toStringCommand() {

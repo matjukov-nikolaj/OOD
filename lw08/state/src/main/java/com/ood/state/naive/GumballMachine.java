@@ -1,8 +1,8 @@
 package com.ood.state.naive;
 
 import com.ood.exception.WrongAmountException;
-import com.ood.state.service.QuartersController;
-import com.ood.state.service.QuartersControllerImpl;
+import com.ood.state.quarters.QuartersController;
+import com.ood.state.quarters.QuartersControllerImpl;
 
 public class GumballMachine {
 

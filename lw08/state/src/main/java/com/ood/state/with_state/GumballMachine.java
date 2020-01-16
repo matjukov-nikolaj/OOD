@@ -1,7 +1,7 @@
 package com.ood.state.with_state;
 
 import com.ood.exception.WrongAmountException;
-import com.ood.state.service.QuartersController;
+import com.ood.state.quarters.QuartersController;
 
 public interface GumballMachine {
 

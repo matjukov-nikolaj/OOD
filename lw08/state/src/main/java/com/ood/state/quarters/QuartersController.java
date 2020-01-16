@@ -1,4 +1,4 @@
-package com.ood.state.service;
+package com.ood.state.quarters;
 
 public interface QuartersController {
 

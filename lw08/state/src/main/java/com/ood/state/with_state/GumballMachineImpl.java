@@ -1,8 +1,8 @@
 package com.ood.state.with_state;
 
 import com.ood.exception.WrongAmountException;
-import com.ood.state.service.QuartersController;
-import com.ood.state.service.QuartersControllerImpl;
+import com.ood.state.quarters.QuartersController;
+import com.ood.state.quarters.QuartersControllerImpl;
 
 public class GumballMachineImpl implements GumballMachine {
 
@@ -61,7 +61,7 @@ public class GumballMachineImpl implements GumballMachine {
         return count;
     }
 
-    public void releaseBall() {
+    private void releaseBall() {
         if (count != 0)
         {
             System.out.println("A gumball comes rolling out the slot");
@@ -69,19 +69,19 @@ public class GumballMachineImpl implements GumballMachine {
         }
     }
 
-    public void setSoldOutState() {
+    private void setSoldOutState() {
         state = soldOutState;
     }
 
-    public void setNoQuarterState() {
+    private void setNoQuarterState() {
         state = noQuarterState;
     }
 
-    public void setSoldState() {
+    private void setSoldState() {
         state = soldState;
     }
 
-    public void setHasQuarterState() {
+    private void setHasQuarterState() {
         state = hasQuarterState;
     }
 
@@ -95,6 +95,7 @@ public class GumballMachineImpl implements GumballMachine {
         if (ballsCount < 0) {
             throw new WrongAmountException("Count of gumballs cant be less than zero.");
         }
+        this.count = ballsCount;
         this.state.refill(ballsCount);
     }
 

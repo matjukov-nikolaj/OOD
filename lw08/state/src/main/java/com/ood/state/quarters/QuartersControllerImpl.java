@@ -1,4 +1,4 @@
-package com.ood.state.service;
+package com.ood.state.quarters;
 
 public class QuartersControllerImpl implements QuartersController {
 
@@ -28,7 +28,7 @@ public class QuartersControllerImpl implements QuartersController {
 
     public void returnQuarters() {
         if (quartersCount > 0) {
-            System.out.println(quartersCount + " quarter" + (quartersCount != 1 ? "s" : "" + " returned"));
+            System.out.println(quartersCount + " quarter" + ((quartersCount != 1 ? "s" : "") + " returned"));
         }
         quartersCount = 0;
     }

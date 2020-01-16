@@ -17,14 +17,10 @@ public class GumballMachineImplTest {
     private GumballMachineImpl baseMachine;
 
     @Before
-    public void setUp() {
+    public void setUp() throws WrongAmountException {
         PrintStream printStream = new PrintStream(output);
         System.setOut(printStream);
-        try {
-            baseMachine = new GumballMachineImpl(10);
-        } catch (Exception e) {
-            fail();
-        }
+        baseMachine = new GumballMachineImpl(10);
     }
 
     @After
@@ -34,37 +30,25 @@ public class GumballMachineImplTest {
     }
 
     @Test
-    public void canCreateWithoutGumBalls() {
-        try {
-            GumballMachineImpl gumballMachine = new GumballMachineImpl(0);
-            assertEquals(SoldOutState.class, gumballMachine.getState().getClass());
-        } catch (Exception e) {
-            fail();
-        }
+    public void canCreateWithoutGumBalls() throws WrongAmountException {
+        GumballMachineImpl gumballMachine = new GumballMachineImpl(0);
+        assertEquals(SoldOutState.class, gumballMachine.getState().getClass());
     }
 
     @Test
-    public void canCreateWithoutGumBallsAndThenRefill() {
-        try {
-            GumballMachineImpl gumballMachine = new GumballMachineImpl(0);
-            assertEquals(SoldOutState.class, gumballMachine.getState().getClass());
-            gumballMachine.getState().refill(10);
-            assertEquals(NoQuarterState.class, gumballMachine.getState().getClass());
-            String expectedResult = "";
-            assertEquals(expectedResult, output.toString());
-        } catch (Exception e) {
-            fail();
-        }
+    public void canCreateWithoutGumBallsAndThenRefill() throws WrongAmountException {
+        GumballMachineImpl gumballMachine = new GumballMachineImpl(0);
+        assertEquals(SoldOutState.class, gumballMachine.getState().getClass());
+        gumballMachine.getState().refill(10);
+        assertEquals(NoQuarterState.class, gumballMachine.getState().getClass());
+        String expectedResult = "";
+        assertEquals(expectedResult, output.toString());
     }
 
     @Test
-    public void canCreateWithGumBalls() {
-        try {
-            GumballMachineImpl gumballMachine = new GumballMachineImpl(10);
-            assertEquals(NoQuarterState.class, gumballMachine.getState().getClass());
-        } catch (Exception e) {
-            fail();
-        }
+    public void canCreateWithGumBalls() throws WrongAmountException {
+        GumballMachineImpl gumballMachine = new GumballMachineImpl(10);
+        assertEquals(NoQuarterState.class, gumballMachine.getState().getClass());
     }
 
     @Test
@@ -131,45 +115,33 @@ public class GumballMachineImplTest {
     }
 
     @Test
-    public void userCantTurnCrankWithoutGumBalls() {
-        try {
-            GumballMachineImpl gumballMachine = new GumballMachineImpl(0);
-            gumballMachine.turnCrank();
-            String expectedResult = "You turned but there's no gumballs\r\nNo gumball dispensed\r\n";
-            assertEquals(expectedResult, output.toString());
-        } catch (Exception e) {
-            fail();
-        }
+    public void userCantTurnCrankWithoutGumBalls() throws WrongAmountException {
+        GumballMachineImpl gumballMachine = new GumballMachineImpl(0);
+        gumballMachine.turnCrank();
+        String expectedResult = "You turned but there's no gumballs\r\nNo gumball dispensed\r\n";
+        assertEquals(expectedResult, output.toString());
     }
 
     @Test
-    public void userCantTwiceCrank() {
-        try {
-            GumballMachineImpl gumballMachine = new GumballMachineImpl(1);
-            gumballMachine.setState(new SoldState(gumballMachine));
-            gumballMachine.turnCrank();
-            String expectedResult = "Turning twice doesn't get you another gumball\r\n" +
-                    "A gumball comes rolling out the slot\r\n" +
-                    "Oops, out of gumballs\r\n";
-            assertEquals(expectedResult, output.toString());
-        } catch (Exception e) {
-            fail();
-        }
+    public void userCantTwiceCrank() throws WrongAmountException {
+        GumballMachineImpl gumballMachine = new GumballMachineImpl(1);
+        gumballMachine.setState(new SoldState(gumballMachine));
+        gumballMachine.turnCrank();
+        String expectedResult = "Turning twice doesn't get you another gumball\r\n" +
+                "A gumball comes rolling out the slot\r\n" +
+                "Oops, out of gumballs\r\n";
+        assertEquals(expectedResult, output.toString());
     }
 
     @Test
-    public void userCantTurnCrankWhenInMachineNoQuarters() {
-        try {
-            GumballMachineImpl gumballMachine = new GumballMachineImpl(1);
-            gumballMachine.insertQuarter();
-            gumballMachine.turnCrank();
-            gumballMachine.turnCrank();
-            String expectedResult = "You turned but there's no gumballsNo gumball dispensed";
-            String[] outArray = output.toString().split("\r\n");
-            assertEquals(expectedResult, outArray[outArray.length - 2] + outArray[outArray.length - 1]);
-        } catch (Exception e) {
-            fail();
-        }
+    public void userCantTurnCrankWhenInMachineNoQuarters() throws WrongAmountException {
+        GumballMachineImpl gumballMachine = new GumballMachineImpl(1);
+        gumballMachine.insertQuarter();
+        gumballMachine.turnCrank();
+        gumballMachine.turnCrank();
+        String expectedResult = "You turned but there's no gumballsNo gumball dispensed";
+        String[] outArray = output.toString().split("\r\n");
+        assertEquals(expectedResult, outArray[outArray.length - 2] + outArray[outArray.length - 1]);
     }
 
     @Test
@@ -184,15 +156,11 @@ public class GumballMachineImplTest {
     }
 
     @Test
-    public void cantInsertQuarterInSoldOutState() {
-        try {
-            GumballMachineImpl gumballMachine = new GumballMachineImpl(0);
-            gumballMachine.insertQuarter();
-            String expectedResult = "You can't insert a quarter, the machine is sold out\r\n";
-            assertEquals(expectedResult, output.toString());
-        } catch (Exception e) {
-            fail();
-        }
+    public void cantInsertQuarterInSoldOutState() throws WrongAmountException {
+        GumballMachineImpl gumballMachine = new GumballMachineImpl(0);
+        gumballMachine.insertQuarter();
+        String expectedResult = "You can't insert a quarter, the machine is sold out\r\n";
+        assertEquals(expectedResult, output.toString());
     }
 
     @Test
@@ -203,87 +171,63 @@ public class GumballMachineImplTest {
     }
 
     @Test
-    public void cantEjectQuarterInSoldOutState() {
-        try {
-            GumballMachineImpl gumballMachine = new GumballMachineImpl(0);
-            gumballMachine.ejectQuarter();
-            String expectedResult = "You can't eject, you haven't inserted a quarter yet\r\n";
-            assertEquals(expectedResult, output.toString());
-        } catch (Exception e) {
-            fail();
-        }
+    public void cantEjectQuarterInSoldOutState() throws WrongAmountException {
+        GumballMachineImpl gumballMachine = new GumballMachineImpl(0);
+        gumballMachine.ejectQuarter();
+        String expectedResult = "You can't eject, you haven't inserted a quarter yet\r\n";
+        assertEquals(expectedResult, output.toString());
     }
 
     @Test
-    public void cantEjectQuarterInSellsState() {
-        try {
-            GumballMachineImpl gumballMachine = new GumballMachineImpl(1);
-            gumballMachine.setState(new SoldState(gumballMachine));
-            assertEquals(0, gumballMachine.getQuartersController().getQuartersCount());
-            gumballMachine.ejectQuarter();
-            assertEquals(0, gumballMachine.getQuartersController().getQuartersCount());
-            assertEquals("", output.toString());
-        } catch (Exception e) {
-            fail();
-        }
+    public void cantEjectQuarterInSellsState() throws WrongAmountException {
+        GumballMachineImpl gumballMachine = new GumballMachineImpl(1);
+        gumballMachine.setState(new SoldState(gumballMachine));
+        assertEquals(0, gumballMachine.getQuartersController().getQuartersCount());
+        gumballMachine.ejectQuarter();
+        assertEquals(0, gumballMachine.getQuartersController().getQuartersCount());
+        assertEquals("", output.toString());
     }
 
     @Test
-    public void cabGetQuartersInSoldOutState() {
-        try {
-            GumballMachineImpl gumballMachine = new GumballMachineImpl(1);
-            gumballMachine.insertQuarter();
-            gumballMachine.insertQuarter();
-            gumballMachine.insertQuarter();
-            gumballMachine.turnCrank();
-            assertEquals(2, gumballMachine.getQuartersController().getQuartersCount());
-            gumballMachine.ejectQuarter();
-            assertEquals(0, gumballMachine.getQuartersController().getQuartersCount());
-        } catch (Exception e) {
-            fail();
-        }
+    public void cabGetQuartersInSoldOutState() throws WrongAmountException {
+        GumballMachineImpl gumballMachine = new GumballMachineImpl(1);
+        gumballMachine.insertQuarter();
+        gumballMachine.insertQuarter();
+        gumballMachine.insertQuarter();
+        gumballMachine.turnCrank();
+        assertEquals(2, gumballMachine.getQuartersController().getQuartersCount());
+        gumballMachine.ejectQuarter();
+        assertEquals(0, gumballMachine.getQuartersController().getQuartersCount());
     }
 
 
     @Test
-    public void cabGetQuartersInSellsState() {
-        try {
-            GumballMachineImpl gumballMachine = new GumballMachineImpl(1);
-            gumballMachine.insertQuarter();
-            gumballMachine.insertQuarter();
-            gumballMachine.insertQuarter();
-            assertEquals(3, gumballMachine.getQuartersController().getQuartersCount());
-            gumballMachine.setState(new SoldState(gumballMachine));
-            gumballMachine.ejectQuarter();
-            assertEquals(0, gumballMachine.getQuartersController().getQuartersCount());
-        } catch (Exception e) {
-            fail();
-        }
+    public void cabGetQuartersInSellsState() throws WrongAmountException {
+        GumballMachineImpl gumballMachine = new GumballMachineImpl(1);
+        gumballMachine.insertQuarter();
+        gumballMachine.insertQuarter();
+        gumballMachine.insertQuarter();
+        assertEquals(3, gumballMachine.getQuartersController().getQuartersCount());
+        gumballMachine.setState(new SoldState(gumballMachine));
+        gumballMachine.ejectQuarter();
+        assertEquals(0, gumballMachine.getQuartersController().getQuartersCount());
     }
 
     @Test
-    public void ifMachineDoesntHaveQuartersUserCantEnjectQuarter() {
-        try {
+    public void ifMachineDoesntHaveQuartersUserCantEnjectQuarter() throws WrongAmountException {
             String expectedResult = "You haven't inserted a quarter\r\n";
             baseMachine.ejectQuarter();
             assertEquals(expectedResult, output.toString());
-        } catch (Exception e) {
-            fail();
-        }
     }
 
     @Test
-    public void ifMachineHasQuartersUserCangetAllQuarters() {
-        try {
+    public void ifMachineHasQuartersUserCangetAllQuarters() throws WrongAmountException {
             baseMachine.insertQuarter();
             baseMachine.insertQuarter();
             baseMachine.insertQuarter();
             assertEquals(3, baseMachine.getQuartersController().getQuartersCount());
             baseMachine.ejectQuarter();
             assertEquals(0, baseMachine.getQuartersController().getQuartersCount());
-        } catch (Exception e) {
-            fail();
-        }
     }
 
     @Test
@@ -305,128 +249,89 @@ public class GumballMachineImplTest {
     }
 
     @Test
-    public void ifRefillToZeroInSoldOutStateStateIsNotChanged() {
-        try {
-            GumballMachineImpl gumballMachine = new GumballMachineImpl(0);
-            gumballMachine.refill(0);
-            assertEquals(SoldOutState.class, gumballMachine.getState().getClass());
-        } catch (Exception e) {
-            fail();
-        }
+    public void ifRefillToZeroInSoldOutStateStateIsNotChanged() throws WrongAmountException {
+        GumballMachineImpl gumballMachine = new GumballMachineImpl(0);
+        gumballMachine.refill(0);
+        assertEquals(SoldOutState.class, gumballMachine.getState().getClass());
     }
 
     @Test
-    public void ifRefillAndMachineHasQuartersMachineStateEqualsHasQuarter() {
-        try {
-            baseMachine.insertQuarter();
-            baseMachine.insertQuarter();
-            baseMachine.insertQuarter();
-            assertEquals(3, baseMachine.getQuartersController().getQuartersCount());
-            baseMachine.refill(4);
-            assertEquals(HasQuarterState.class, baseMachine.getState().getClass());
-            assertEquals(3, baseMachine.getQuartersController().getQuartersCount());
-        } catch (Exception e) {
-            fail();
-        }
+    public void ifRefillAndMachineHasQuartersMachineStateEqualsHasQuarter() throws WrongAmountException {
+        baseMachine.insertQuarter();
+        baseMachine.insertQuarter();
+        baseMachine.insertQuarter();
+        assertEquals(3, baseMachine.getQuartersController().getQuartersCount());
+        baseMachine.refill(4);
+        assertEquals(HasQuarterState.class, baseMachine.getState().getClass());
+        assertEquals(3, baseMachine.getQuartersController().getQuartersCount());
     }
 
     @Test
-    public void cantRefillMachineInSoldState() {
-        try {
-            GumballMachineImpl gumballMachine = new GumballMachineImpl(1);
-            gumballMachine.setState(new SoldState(gumballMachine));
-            gumballMachine.refill(2);
-            String expectedResult = "Cant refill machine in SOLD state\r\n";
-            assertEquals(expectedResult, output.toString());
-        } catch (Exception e) {
-            fail();
-        }
+    public void cantRefillMachineInSoldState() throws WrongAmountException {
+        GumballMachineImpl gumballMachine = new GumballMachineImpl(1);
+        gumballMachine.setState(new SoldState(gumballMachine));
+        gumballMachine.refill(2);
+        String expectedResult = "Cant refill machine in SOLD state\r\n";
+        assertEquals(expectedResult, output.toString());
     }
 
     @Test
-    public void canRefillMachineInNoQuarterStateStateIsNotChanged() {
-        try {
-            assertEquals(NoQuarterState.class, baseMachine.getState().getClass());
-            baseMachine.refill(2);
-            assertEquals(NoQuarterState.class, baseMachine.getState().getClass());
-        } catch (Exception e) {
-            fail();
-        }
+    public void canRefillMachineInNoQuarterStateStateIsNotChanged() throws WrongAmountException {
+        assertEquals(NoQuarterState.class, baseMachine.getState().getClass());
+        baseMachine.refill(2);
+        assertEquals(NoQuarterState.class, baseMachine.getState().getClass());
     }
 
     @Test
-    public void ifRefillMachineToZeroGumBallsInNotQuarterStateThenStateIsSoldOut() {
-        try {
-            assertEquals(NoQuarterState.class, baseMachine.getState().getClass());
-            baseMachine.refill(0);
-            assertEquals(SoldOutState.class, baseMachine.getState().getClass());
-        } catch (Exception e) {
-            fail();
-        }
+    public void ifRefillMachineToZeroGumBallsInNotQuarterStateThenStateIsSoldOut() throws WrongAmountException {
+        assertEquals(NoQuarterState.class, baseMachine.getState().getClass());
+        baseMachine.refill(0);
+        assertEquals(SoldOutState.class, baseMachine.getState().getClass());
     }
 
     @Test
-    public void ifRefillMachineToZeroGumBallsInHasQuarterStateThenStateIsSoldOut() {
-        try {
-            baseMachine.insertQuarter();
-            assertEquals(HasQuarterState.class, baseMachine.getState().getClass());
-            baseMachine.refill(0);
-            assertEquals(SoldOutState.class, baseMachine.getState().getClass());
-        } catch (Exception e) {
-            fail();
-        }
+    public void ifRefillMachineToZeroGumBallsInHasQuarterStateThenStateIsSoldOut() throws WrongAmountException {
+        baseMachine.insertQuarter();
+        assertEquals(HasQuarterState.class, baseMachine.getState().getClass());
+        baseMachine.refill(0);
+        assertEquals(SoldOutState.class, baseMachine.getState().getClass());
+        assertEquals(1, baseMachine.getQuartersController().getQuartersCount());
     }
 
     @Test
-    public void canConvertMachineToStringWithOneGumBall() {
-        try {
-            GumballMachineImpl gumballMachine = new GumballMachineImpl(1);
-            String expectedResult = "Mighty Gumball, Inc.\r\n" +
-                    "C++-enabled Standing Gumball Model #2016\r\n" +
-                    "Inventory: 1 gumball\r\n" +
-                    "Machine is waiting for quarter\r\n";
-            assertEquals(expectedResult, gumballMachine.toString());
-        } catch (Exception e) {
-            fail();
-        }
+    public void canConvertMachineToStringWithOneGumBall() throws WrongAmountException {
+        GumballMachineImpl gumballMachine = new GumballMachineImpl(1);
+        String expectedResult = "Mighty Gumball, Inc.\r\n" +
+                "C++-enabled Standing Gumball Model #2016\r\n" +
+                "Inventory: 1 gumball\r\n" +
+                "Machine is waiting for quarter\r\n";
+        assertEquals(expectedResult, gumballMachine.toString());
     }
 
     @Test
-    public void cantDispenceInSoldOutState() {
-        try {
-            GumballMachineImpl gumballMachine = new GumballMachineImpl(0);
-            gumballMachine.getState().dispence();
-            String expectedResult = "No gumball dispensed\r\n";
-            assertEquals(expectedResult, output.toString());
-        } catch (Exception e) {
-            fail();
-        }
+    public void cantDispenceInSoldOutState() throws WrongAmountException {
+        GumballMachineImpl gumballMachine = new GumballMachineImpl(0);
+        gumballMachine.getState().dispence();
+        String expectedResult = "No gumball dispensed\r\n";
+        assertEquals(expectedResult, output.toString());
     }
 
     @Test
-    public void cantDispenceInNoQuarterState() {
-        try {
-            GumballMachineImpl gumballMachine = new GumballMachineImpl(1);
-            gumballMachine.getState().dispence();
-            String expectedResult = "You need to pay first\r\n";
-            assertEquals(expectedResult, output.toString());
-        } catch (Exception e) {
-            fail();
-        }
+    public void cantDispenceInNoQuarterState() throws WrongAmountException {
+        GumballMachineImpl gumballMachine = new GumballMachineImpl(1);
+        gumballMachine.getState().dispence();
+        String expectedResult = "You need to pay first\r\n";
+        assertEquals(expectedResult, output.toString());
     }
 
     @Test
-    public void cantDispenceInHasQuarterState() {
-        try {
-            GumballMachineImpl gumballMachine = new GumballMachineImpl(1);
-            gumballMachine.insertQuarter();
-            gumballMachine.getState().dispence();
-            String expectedResult = "No gumball dispensed";
-            String[] outArray = output.toString().split("\r\n");
-            assertEquals(expectedResult, outArray[outArray.length -1]);
-        } catch (Exception e) {
-            fail();
-        }
+    public void cantDispenceInHasQuarterState() throws WrongAmountException {
+        GumballMachineImpl gumballMachine = new GumballMachineImpl(1);
+        gumballMachine.insertQuarter();
+        gumballMachine.getState().dispence();
+        String expectedResult = "No gumball dispensed";
+        String[] outArray = output.toString().split("\r\n");
+        assertEquals(expectedResult, outArray[outArray.length - 1]);
     }
 
     @Test
